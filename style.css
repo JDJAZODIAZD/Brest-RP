@@ -1,0 +1,56 @@
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#f4f4f4;
+}
+
+header{
+    background:#0b5ed7;
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+header h1{
+    margin:0;
+    font-size:40px;
+}
+
+.catalogue{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:40px;
+}
+
+.carte{
+    width:300px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+    transition:.3s;
+}
+
+.carte:hover{
+    transform:scale(1.05);
+}
+
+.carte img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.carte h2{
+    text-align:center;
+}
+
+.prix{
+    text-align:center;
+    color:#e60000;
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
