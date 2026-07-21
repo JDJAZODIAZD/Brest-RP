@@ -1,115 +1,431 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Immobilier BREST RP 🇫🇷</title>
-
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#f2f2f2;
-}
-
-header{
-    background:#003B8E;
-    color:white;
-    text-align:center;
-    padding:25px;
-}
-
-nav{
-    background:#002d6b;
-    text-align:center;
-    padding:10px;
-}
-
-nav a{
-    color:white;
-    text-decoration:none;
-    margin:15px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-    padding:20px;
-}
-
-.bien{
-    background:white;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 0 10px rgba(0,0,0,0.15);
-    margin-bottom:25px;
-}
-
-.bien img{
-    width:100%;
-    height:300px;
-    object-fit:cover;
-}
-
-.info{
-    padding:20px;
-}
-
-.prix{
-    color:green;
-    font-size:24px;
-    font-weight:bold;
-}
-
-footer{
-    background:#003B8E;
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brest RP - Serveur & Boutique</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
 
-<header>
-<h1>🏠 Immobilier BREST RP 🇫🇷</h1>
-<p>Trouvez votre futur logement RP</p>
-</header>
+    <div class="bg-glow"></div>
 
-<nav>
-<a href="#">Accueil</a>
-<a href="#">Maisons</a>
-<a href="#">Appartements</a>
-<a href="#">Contact</a>
-</nav>
+    <!-- En-tête -->
+    <header class="header">
+        <div class="logo-title">
+            <span class="badge"><i class="fa-solid fa-shield-halved"></i> Emergency Hamburg</span>
+            <h1>🚔 Brest RP</h1>
+        </div>
+        <p>Le serveur Roleplay référence - Un univers sur-mesure</p>
+    </header>
 
-<div class="container">
+    <!-- Navigation interactive -->
+    <nav>
+        <button class="nav-btn active" onclick="switchPage('accueil')">
+            <i class="fa-solid fa-house"></i> Accueil
+        </button>
+        <button class="nav-btn" onclick="switchPage('boutique')">
+            <i class="fa-solid fa-cart-shopping"></i> Boutique Builds
+        </button>
+        <button class="nav-btn" onclick="switchPage('immobiliere')">
+            <i class="fa-solid fa-building"></i> Agence Immobilière
+        </button>
+        <a href="https://discord.gg/gfYK88ADYt" target="_blank" rel="noopener noreferrer" class="nav-discord">
+            <i class="fa-brands fa-discord"></i> Discord Principal
+        </a>
+    </nav>
 
-<div class="bien">
-<img src="https://via.placeholder.com/1200x700" alt="">
-<div class="info">
-<h2>Maison moderne</h2>
-<p>Grande maison avec garage et jardin.</p>
-<p class="prix">250 000 €</p>
-</div>
-</div>
+    <!-- PAGE 1 : ACCUEIL -->
+    <section id="page-accueil" class="page-section active">
+        <div class="hero-container">
+            
+            <!-- Carte Banner Néon Master -->
+            <div class="neon-card">
+                
+                <!-- Barre Supérieure -->
+                <div class="card-topbar">
+                    <div class="brand">
+                        <span class="fr-flag">🇫🇷</span>
+                        <span class="brand-name">BREST <span class="dot">•</span> RP</span>
+                    </div>
+                    <div class="audio-wave">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <i class="fa-solid fa-microphone-lines mic-glow"></i>
+                    </div>
+                </div>
 
-<div class="bien">
-<img src="https://via.placeholder.com/1200x700" alt="">
-<div class="info">
-<h2>Appartement centre-ville</h2>
-<p>Appartement lumineux proche des commerces.</p>
-<p class="prix">120 000 €</p>
-</div>
-</div>
+                <!-- Grille Principale -->
+                <div class="neon-grid">
+                    
+                    <!-- Bloc Discord Icon -->
+                    <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="grid-item discord-box">
+                        <i class="fa-brands fa-discord"></i>
+                        <span class="hover-text">Rejoindre</span>
+                    </a>
 
-</div>
+                    <!-- Bloc Lien Discord -->
+                    <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="grid-item link-box">
+                        <div class="link-content">
+                            <span class="symbol">»</span>
+                            <span class="prefix">.gg/</span>
+                            <span class="main-code">gfYK88ADYt</span>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    </a>
 
-<footer>
-© 2026 Immobilier BREST RP 🇫🇷
-</footer>
+                    <!-- Bloc Image RP -->
+                    <div class="grid-item img-box">
+                        <div class="img-gradient"></div>
+                        <div class="tag">EMERGENCY HAMBURG</div>
+                    </div>
 
+                    <!-- Bloc Code Session -->
+                    <div class="grid-item session-box">
+                        <div class="session-header">
+                            <i class="fa-solid fa-ticket-simple"></i>
+                            <span>CODE SESSION</span>
+                        </div>
+                        <div class="session-code">m727gwhr</div>
+                    </div>
+
+                    <!-- Bloc Micro -->
+                    <div class="grid-item mic-box">
+                        <i class="fa-solid fa-microphone-lines"></i>
+                    </div>
+
+                    <!-- Bloc VOC Obligatoire -->
+                    <div class="grid-item voc-box">
+                        <i class="fa-solid fa-shield-check"></i>
+                        <span>VOC OBLIGATOIRE</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PAGE 2 : BOUTIQUE BUILDS -->
+    <section id="page-boutique" class="page-section">
+        <div class="section-title">
+            <h2>🛒 Catalogue des Builds</h2>
+            <p>Cliquez sur "Acheter" pour commander votre item sur Discord</p>
+        </div>
+
+        <main class="catalogue">
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="gav1.jpg" alt="Salle de Garde à Vue"></div>
+                <div class="contenu">
+                    <h2>Salle de Garde à Vue</h2>
+                    <p class="description">Salle complète aménagée pour le commissariat.</p>
+                    <div class="footer-card">
+                        <p class="prix">3 542 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="chaises1.jpg" alt="Lot de 5 Chaises"></div>
+                <div class="contenu">
+                    <h2>Lot de 5 Chaises</h2>
+                    <p class="description">Mobilier pour aménagement de vos bureaux RP.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 000 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="bureaux1.jpg" alt="Bureaux"></div>
+                <div class="contenu">
+                    <h2>Bureaux</h2>
+                    <p class="description">Ensemble complet pour vos services administratifs.</p>
+                    <div class="footer-card">
+                        <p class="prix">2 643 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="dj1.jpg" alt="Matériel DJ"></div>
+                <div class="contenu">
+                    <h2>Matériel DJ</h2>
+                    <p class="description">Équipement sonore pour animer vos événements.</p>
+                    <div class="footer-card">
+                        <p class="prix">3 210 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="conteneur1.jpg" alt="Conteneur"></div>
+                <div class="contenu">
+                    <h2>Conteneur</h2>
+                    <p class="description">Conteneur de stockage industriel et maritime.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 200 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="travaux1.jpg" alt="Zone de Travaux"></div>
+                <div class="contenu">
+                    <h2>Zone de Travaux</h2>
+                    <p class="description">Matériel complet de balisage pour vos chantiers.</p>
+                    <div class="footer-card">
+                        <p class="prix">2 400 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="barriere1.jpg" alt="Barrière de Sécurité"></div>
+                <div class="contenu">
+                    <h2>Barrière de Sécurité</h2>
+                    <p class="description">Barrières robustes pour sécuriser les périmètres.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 100 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="bordure1.jpg" alt="Bordure Routière"></div>
+                <div class="contenu">
+                    <h2>Bordure Routière</h2>
+                    <p class="description">Éléments de bordure pour aménagement urbain.</p>
+                    <div class="footer-card">
+                        <p class="prix">2 000 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="pneu1.jpg" alt="Pneu"></div>
+                <div class="contenu">
+                    <h2>Pneu</h2>
+                    <p class="description">Pneus de rechange ou de décor pour vos garages.</p>
+                    <div class="footer-card">
+                        <p class="prix">2 000 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="table1.jpg" alt="Lot de 2 Tables"></div>
+                <div class="contenu">
+                    <h2>Lot de 2 Tables</h2>
+                    <p class="description">Tables solides pour aménager vos espaces.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 400 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="camping1.jpg" alt="Équipement Camping"></div>
+                <div class="contenu">
+                    <h2>Équipement Camping</h2>
+                    <p class="description">Matériel complet pour vos sorties en plein air.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 183 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="conteneurs1jpg.png" alt="Lot de Conteneurs"></div>
+                <div class="contenu">
+                    <h2>Lot de Conteneurs</h2>
+                    <p class="description">Ensemble de conteneurs pour vos grands dépôts.</p>
+                    <div class="footer-card">
+                        <p class="prix">2 950 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="barriererouge1.jpg" alt="Barrière Rouge"></div>
+                <div class="contenu">
+                    <h2>Barrière Rouge</h2>
+                    <p class="description">Barrière de contrôle et de sécurité visuelle.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 000 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="grillage1.jpg" alt="Grillage"></div>
+                <div class="contenu">
+                    <h2>Grillage</h2>
+                    <p class="description">Clôture grillagée pour sécuriser vos terrains.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 500 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="bellechaise1.jpg" alt="Chaise de Luxe"></div>
+                <div class="contenu">
+                    <h2>Chaise de Luxe</h2>
+                    <p class="description">Siège de qualité pour intérieur haut de gamme.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 000 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="livres1.jpg" alt="Étagère de Livres"></div>
+                <div class="contenu">
+                    <h2>Étagère de Livres</h2>
+                    <p class="description">Rangement de livres idéal pour vos bureaux.</p>
+                    <div class="footer-card">
+                        <p class="prix">900 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="metal1.jpg" alt="Plaques Métalliques"></div>
+                <div class="contenu">
+                    <h2>Plaques Métalliques</h2>
+                    <p class="description">Plaques de métal pour constructions solides.</p>
+                    <div class="footer-card">
+                        <p class="prix">1 230 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="plots1.jpg" alt="Lot de 10 Plots"></div>
+                <div class="contenu">
+                    <h2>Lot de 10 Plots</h2>
+                    <p class="description">Plots de signalisation pour réguler le trafic.</p>
+                    <div class="footer-card">
+                        <p class="prix">3 640 €</p>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+
+    <!-- PAGE 3 : AGENCE IMMOBILIÈRE -->
+    <section id="page-immobiliere" class="page-section">
+        <div class="section-title">
+            <h2>🏢 Agence Immobilière</h2>
+            <p>Achetez vos propriétés d'exception via notre Discord Immobilier</p>
+        </div>
+
+        <main class="catalogue">
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="citadelle1.jpg" alt="La Citadelle"></div>
+                <div class="contenu">
+                    <h2>La Citadelle</h2>
+                    <p class="description">Grande propriété fortifiée idéalement située.</p>
+                    <div class="footer-card">
+                        <p class="prix">50 000 €</p>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="bronx1.jpg" alt="Propriété Bronx"></div>
+                <div class="contenu">
+                    <h2>Résidence Bronx</h2>
+                    <p class="description">Complexe urbain moderne au cœur de la ville.</p>
+                    <div class="footer-card">
+                        <p class="prix">100 000 €</p>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="lagrande.jpg" alt="La Grande Propriété"></div>
+                <div class="contenu">
+                    <h2>La Grande</h2>
+                    <p class="description">Spacieuse demeure avec de multiples équipements.</p>
+                    <div class="footer-card">
+                        <p class="prix">75 000 €</p>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="manoir1.jpg" alt="Le Manoir"></div>
+                <div class="contenu">
+                    <h2>Le Manoir</h2>
+                    <p class="description">Bâtisse de charme au cadre confidentiel.</p>
+                    <div class="footer-card">
+                        <p class="prix">50 000 €</p>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carte">
+                <div class="img-wrapper"><img src="beach1.jpg" alt="Villa Beach"></div>
+                <div class="contenu">
+                    <h2>Villa Beach</h2>
+                    <p class="description">Propriété de haut standing en bord de mer.</p>
+                    <div class="footer-card">
+                        <p class="prix">150 000 €</p>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </section>
+
+    <footer>
+        <p>© 2026 Brest RP - Tous droits réservés | Emergency Hamburg</p>
+    </footer>
+
+    <script>
+        function switchPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('page-' + pageId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
