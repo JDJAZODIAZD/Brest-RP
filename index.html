@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,35 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brest RP - Boutique</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1>Brest RP</h1>
-    <p>Boutique officielle du serveur Emergency Hamburg</p>
-</header>
+    <header class="header">
+        <h1>🚔 Brest RP</h1>
+        <p>Bienvenue sur la boutique officielle du serveur Emergency Hamburg</p>
+    </header>
 
-<section class="catalogue">
+    <nav>
+        <a href="#">Accueil</a>
+        <a href="#" class="active">Boutique</a>
+        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" rel="noopener noreferrer">Discord</a>
+    </nav>
 
-    <div class="carte">
-        <img src="images/gav1.jpg" alt="Véhicule 1">
-        <h2>Salle de Garde à vue</h2>
-        <p class="prix">3 542 €</p>
-    </div>
+    <main class="catalogue">
 
-    <div class="carte">
-        <img src="images/vehicule2.jpg" alt="Véhicule 2">
-        <h2>5 Chaises</h2>
-        <p class="prix">1 000€</p>
-    </div>
+        <div class="carte">
+            <div class="img-wrapper">
+                <img src="gav1.jpg" alt="Salle de Garde à Vue">
+            </div>
+            <div class="contenu">
+                <h2>Salle de Garde à Vue</h2>
+                <p class="description">Salle complète pour le commissariat.</p>
+                <p class="prix">3 542 €</p>
+                <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" rel="noopener noreferrer" class="btn-acheter">
+                    🛒 Acheter sur Discord
+                </a>
+            </div>
+        </div>
 
-    <div class="carte">
-        <img src="images/vehicule3.jpg" alt="Véhicule 3">
-        <h2>Bureaux</h2>
-        <p class="prix">2 643 €</p>
-    </div>
+        <div class="carte">
+            <div class="img-wrapper">
+                <img src="chaises1.jpg" alt="5 Chaises">
+            </div>
+            <div class="contenu">
+                <h2>Lot de 5 Chaises</h2>
+                <p class="description">Mobilier pour aménager vos locaux.</p>
+                <p class="prix">1 000 €</p>
+                <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" rel="noopener noreferrer" class="btn-acheter">
+                    🛒 Acheter sur Discord
+                </a>
+            </div>
+        </div>
 
-</section>
+        <div class="carte">
+            <div class="img-wrapper">
+                <img src="bureaux1.jpg" alt="Bureaux">
+            </div>
+            <div class="contenu">
+                <h2>Bureaux</h2>
+                <p class="description">Bureau complet pour votre service.</p>
+                <p class="prix">2 643 €</p>
+                <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" rel="noopener noreferrer" class="btn-acheter">
+                    🛒 Acheter sur Discord
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2026 Brest RP - Tous droits réservés</p>
+    </footer>
 
 </body>
 </html>
