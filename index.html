@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -249,7 +250,7 @@
             </div>
 
             <div class="carte">
-                <div class="img-wrapper"><img src="conteneurs1.jpg" alt="Lot de Conteneurs"></div>
+                <div class="img-wrapper"><img src="conteneurs1jpg.png" alt="Lot de Conteneurs"></div>
                 <div class="contenu">
                     <h2>Lot de Conteneurs</h2>
                     <p class="description">Ensemble de conteneurs pour vos grands dépôts.</p>
@@ -273,7 +274,7 @@
             </div>
 
             <div class="carte">
-                <div class="img-wrapper"><img src="crilliage1.jpg" alt="Grillage"></div>
+                <div class="img-wrapper"><img src="grillage1.jpg" alt="Grillage"></div>
                 <div class="contenu">
                     <h2>Grillage</h2>
                     <p class="description">Clôture grillagée pour sécuriser vos terrains.</p>
@@ -339,26 +340,16 @@
         <p>© 2026 Brest RP - Tous droits réservés | Emergency Hamburg</p>
     </footer>
 
-    <!-- Script JavaScript pour le changement de page -->
     <script>
         function switchPage(pageId) {
-            // Masquer toutes les sections
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.remove('active');
             });
-
-            // Retirer la classe active des boutons
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-
-            // Afficher la section cible
             document.getElementById('page-' + pageId).classList.add('active');
-
-            // Mettre en surbrillance le bouton actif
             event.currentTarget.classList.add('active');
-
-            // Remonter en haut de la page
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
