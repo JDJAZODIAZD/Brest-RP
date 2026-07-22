@@ -1,620 +1,644 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StaffRP - Boutique & Administration</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brest RP - Serveur & Boutique Officielle</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS additionnel pour le Modal de connexion et le Panel Admin (Style Cyberpunk) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 7, 15, 0.85);
+            backdrop-filter: blur(12px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
 
-    body {
-      background-color: #0d0e12;
-      color: #e0e6ed;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    /* --- BARRE DE NAVIGATION --- */
-    header {
-      background: #14171d;
-      padding: 18px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #232833;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
+        .modal-box {
+            background: #0f1322;
+            padding: 35px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.25);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            color: #fff;
+            position: relative;
+        }
 
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(45deg, #00ff88, #00b8ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .modal-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #00f2fe;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-    nav button {
-      background: #1c212c;
-      color: #a0aec0;
-      border: 1px solid #2d3748;
-      padding: 10px 20px;
-      margin-left: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
+        .modal-box p.subtitle {
+            color: #8a99ad;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-    nav button:hover {
-      background: #2d3748;
-      color: #fff;
-    }
+        .admin-input-group {
+            margin-bottom: 18px;
+        }
 
-    nav button.btn-admin {
-      background: linear-gradient(135deg, #00ff88 0%, #00b8ff 100%);
-      color: #0b0e14;
-      border: none;
-      box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-    }
+        .admin-input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: #8a99ad;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
 
-    nav button.btn-admin:hover {
-      box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
-      transform: translateY(-2px);
-    }
+        .admin-input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #232d42;
+            background: #080a12;
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
 
-    /* --- CONTENEUR PRINCIPAL --- */
-    .container {
-      padding: 40px;
-      max-width: 1300px;
-      margin: 0 auto;
-      width: 100%;
-    }
+        .admin-input-group input:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+        }
 
-    .section-title {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 25px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+        .btn-modal-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            border: none;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
 
-    /* --- GRILLE DES BOUTIQUES --- */
-    .shop-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 25px;
-    }
+        .btn-modal-submit:hover {
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            transform: translateY(-2px);
+        }
 
-    .card {
-      background: #14171d;
-      border: 1px solid #232833;
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
+        .btn-modal-close {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #718096;
+            padding: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
 
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: #00ff88;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-    }
+        .btn-modal-close:hover {
+            color: #fff;
+        }
 
-    .card img {
-      width: 100%;
-      height: 190px;
-      object-fit: cover;
-      background: #1c212c;
-    }
+        .error-alert {
+            background: rgba(255, 77, 77, 0.15);
+            border: 1px solid #ff4d4d;
+            color: #ff4d4d;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 15px;
+            display: none;
+        }
 
-    .card-body {
-      padding: 20px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+        /* VUE ADMIN PANEL */
+        .admin-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
 
-    .card-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
+        .admin-card {
+            background: rgba(15, 19, 34, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
 
-    .card-desc {
-      font-size: 14px;
-      color: #a0aec0;
-      margin-bottom: 15px;
-      line-height: 1.4;
-    }
+        .admin-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00f2fe;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
 
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: auto;
-    }
+        .logs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
 
-    .card-price {
-      font-size: 18px;
-      color: #00ff88;
-      font-weight: 800;
-    }
+        .logs-table th, .logs-table td {
+            border: 1px solid #232d42;
+            padding: 12px 15px;
+            text-align: left;
+        }
 
-    .btn-buy {
-      background: #232833;
-      color: #fff;
-      border: 1px solid #2d3748;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.2s;
-    }
+        .logs-table th {
+            background: #080a12;
+            color: #00f2fe;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+        }
 
-    .btn-buy:hover {
-      background: #00ff88;
-      color: #000;
-      border-color: #00ff88;
-    }
+        .logs-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
 
-    /* --- MODAL DE CONNEXION PREMIUM --- */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(10, 12, 16, 0.85);
-      backdrop-filter: blur(12px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      animation: fadeIn 0.3s ease;
-    }
+        .nav-admin-btn {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2) 0%, rgba(79, 172, 254, 0.2) 100%);
+            border: 1px solid #00f2fe !important;
+            color: #00f2fe !important;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .modal-box {
-      background: #14171d;
-      padding: 40px;
-      border-radius: 16px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 255, 136, 0.15);
-      border: 1px solid rgba(0, 255, 136, 0.2);
-      position: relative;
-      animation: slideUp 0.3s ease;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-box h2 {
-      font-size: 26px;
-      color: #fff;
-      text-align: center;
-      margin-bottom: 8px;
-    }
-
-    .modal-box p.subtitle {
-      color: #718096;
-      font-size: 14px;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 13px;
-      color: #a0aec0;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 600;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 1px solid #2d3748;
-      background: #0d0e12;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .input-group input:focus {
-      border-color: #00ff88;
-      box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
-    }
-
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #00ff88 0%, #00b8ff 100%);
-      border: none;
-      color: #0b0e14;
-      font-size: 16px;
-      font-weight: 800;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      margin-top: 10px;
-    }
-
-    .btn-submit:hover {
-      box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
-      transform: translateY(-2px);
-    }
-
-    .btn-cancel {
-      width: 100%;
-      background: transparent;
-      border: none;
-      color: #718096;
-      padding: 10px;
-      margin-top: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    .btn-cancel:hover {
-      color: #e0e6ed;
-    }
-
-    .error-alert {
-      background: rgba(255, 77, 77, 0.1);
-      border: 1px solid #ff4d4d;
-      color: #ff4d4d;
-      padding: 10px;
-      border-radius: 6px;
-      font-size: 13px;
-      text-align: center;
-      margin-bottom: 20px;
-      display: none;
-    }
-
-    /* --- PANEL ADMIN LAYOUT --- */
-    #admin-view {
-      display: none;
-    }
-
-    .admin-card {
-      background: #14171d;
-      padding: 30px;
-      border-radius: 12px;
-      margin-bottom: 30px;
-      border: 1px solid #232833;
-    }
-
-    .admin-card h3 {
-      color: #00ff88;
-      margin-bottom: 20px;
-      font-size: 20px;
-    }
-
-    /* Table des Logs */
-    .logs-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    .logs-table th, .logs-table td {
-      border: 1px solid #232833;
-      padding: 12px 16px;
-      text-align: left;
-      font-size: 14px;
-    }
-
-    .logs-table th {
-      background: #1c212c;
-      color: #00ff88;
-      font-weight: 700;
-    }
-
-    .logs-table tr:nth-child(even) {
-      background: #0d0e12;
-    }
-
-    .badge-status {
-      background: rgba(0, 255, 136, 0.15);
-      color: #00ff88;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
-      border: 1px solid rgba(0, 255, 136, 0.3);
-    }
-  </style>
+        .nav-admin-btn:hover {
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+    </style>
 </head>
 <body>
 
-  <!-- BARRE EN-TÊTE -->
-  <header>
-    <div class="logo">Brest RP Staff</div>
-    <nav>
-      <button onclick="afficherVue('boutique')">Toutes les Boutiques</button>
-      <button class="btn-admin" onclick="ouvrirConnexionAdmin()">Panel Admin</button>
+    <!-- FX d'arrière-plan Cyberpunk -->
+    <div class="bg-glow"></div>
+    <div class="bg-grid-overlay"></div>
+    <div class="scanline"></div>
+
+    <!-- En-tête Principal -->
+    <header class="header">
+        <div class="header-status">
+            <span class="status-badge pulse-green">
+                <span class="status-dot"></span> SERVEUR EN LIGNE
+            </span>
+            <span class="badge"><i class="fa-solid fa-shield-halved"></i> Emergency Hamburg</span>
+        </div>
+        <div class="logo-title">
+            <h1>🚔 BREST <span class="text-gradient">ROLEPLAY</span></h1>
+        </div>
+        <p class="subtitle">L'expérience RP ultime sur Roblox — Immersion, Exclusivité & Communauté</p>
+    </header>
+
+    <!-- Navigation Bar Floating Glass -->
+    <nav class="glass-nav">
+        <button class="nav-btn active" onclick="switchPage('accueil')">
+            <i class="fa-solid fa-house"></i> <span>Accueil</span>
+        </button>
+        <button class="nav-btn" onclick="switchPage('boutique')">
+            <i class="fa-solid fa-cart-shopping"></i> <span>Boutique Builds</span>
+        </button>
+        <button class="nav-btn" onclick="switchPage('immobiliere')">
+            <i class="fa-solid fa-building"></i> <span>Agence Immobilière</span>
+        </button>
+        <a href="https://discord.gg/gfYK88ADYt" target="_blank" rel="noopener noreferrer" class="nav-discord">
+            <i class="fa-brands fa-discord"></i> <span>Discord RP</span>
+        </a>
+        <button class="nav-btn nav-admin-btn" onclick="ouvrirConnexionAdmin()">
+            <i class="fa-solid fa-user-shield"></i> <span>Panel Admin</span>
+        </button>
     </nav>
-  </header>
 
-  <div class="container">
-    
-    <!-- 1. VUE DES BOUTIQUES (AFFICHIÉE PAR DÉFAUT) -->
-    <div id="boutique-view">
-      <div class="section-title">Catalogue des Boutiques VIP</div>
-      <div class="shop-grid" id="catalogue-boutiques">
-        
-        <!-- Boutique 1 -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop&q=60" alt="VIP Gold">
-          <div class="card-body">
-            <div class="card-title">Boutique VIP Gold</div>
-            <p class="card-desc">Accès prioritaire, menu VIP exclusif, salaire doublé et véhicule unique réservé.</p>
-            <div class="card-footer">
-              <span class="card-price">15.00 €</span>
-              <button class="btn-buy">Acheter</button>
+    <!-- PAGE 1 : ACCUEIL -->
+    <section id="page-accueil" class="page-section active">
+        <div class="hero-master">
+            <div class="hero-banner-card">
+                <div class="hero-content">
+                    <div class="hero-top">
+                        <span class="fr-flag-badge">🇫🇷 SERVEUR FRANÇAIS</span>
+                        <div class="live-mic">
+                            <span class="sound-wave">
+                                <span></span><span></span><span></span>
+                            </span>
+                            <span class="mic-text"><i class="fa-solid fa-microphone"></i> VOCAL OBLIGATOIRE</span>
+                        </div>
+                    </div>
+                    
+                    <h2 class="hero-main-title">REJOINS L'AVENTURE <br><span class="hero-glow-text">BREST ROLEPLAY</span></h2>
+                    <p class="hero-desc">Découvre une ville ultra-vivante, des métiers exclusifs, une économie dynamique et des biens uniques au monde sur Emergency Hamburg.</p>
+                    
+                    <div class="hero-actions">
+                        <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="btn-hero btn-hero-primary">
+                            <i class="fa-brands fa-discord"></i> Rejoindre la Communauté
+                        </a>
+                        <button class="btn-hero btn-hero-secondary" onclick="copySessionCode()">
+                            <i class="fa-solid fa-copy"></i> Copier le Code Session
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="dashboard-grid">
+                <div class="dash-card session-card" onclick="copySessionCode()">
+                    <div class="dash-icon"><i class="fa-solid fa-key"></i></div>
+                    <div class="dash-info">
+                        <span class="dash-label">CODE DE SESSION ACTIF</span>
+                        <div class="dash-code-box">
+                            <span id="session-code">m727gwhr</span>
+                            <i class="fa-regular fa-copy copy-icon"></i>
+                        </div>
+                        <span class="dash-subtext" id="copy-text">Cliquez pour copier instantanément</span>
+                    </div>
+                </div>
+
+                <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="dash-card discord-card">
+                    <div class="dash-icon discord-color"><i class="fa-brands fa-discord"></i></div>
+                    <div class="dash-info">
+                        <span class="dash-label">DISCORD PRINCIPAL</span>
+                        <span class="dash-val">discord.gg/gfYK88ADYt</span>
+                        <span class="dash-subtext">Rejoins +1000 membres actifs »</span>
+                    </div>
+                </a>
+
+                <div class="dash-card feature-card">
+                    <div class="dash-icon mic-color"><i class="fa-solid fa-headset"></i></div>
+                    <div class="dash-info">
+                        <span class="dash-label">RÈGLEMENT VOCAL</span>
+                        <span class="dash-val">Micro Requis</span>
+                        <span class="dash-subtext">Immersion RP 100% garantie</span>
+                    </div>
+                </div>
+
+                <div class="dash-card feature-card">
+                    <div class="dash-icon game-color"><i class="fa-solid fa-gamepad"></i></div>
+                    <div class="dash-info">
+                        <span class="dash-label">PLATEFORME</span>
+                        <span class="dash-val">Emergency Hamburg</span>
+                        <span class="dash-subtext">Session privée sécurisée</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 2 : BOUTIQUE BUILDS -->
+    <section id="page-boutique" class="page-section">
+        <div class="section-title">
+            <h2>🛒 Catalogue des Builds & Aménagements</h2>
+            <p>Commandez vos aménagement sur-mesure directement sur Discord</p>
         </div>
 
-        <!-- Boutique 2 -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop&q=60" alt="Véhicules Import">
-          <div class="card-body">
-            <div class="card-title">Boutique Véhicules Import</div>
-            <p class="card-desc">Débloquez l'accès aux véhicules réels de sport et de luxe personnalisables.</p>
-            <div class="card-footer">
-              <span class="card-price">25.00 €</span>
-              <button class="btn-buy">Acheter</button>
+        <main class="catalogue" id="catalogue-builds">
+            <!-- PROMO FLASH -->
+            <div class="carte carte-promo">
+                <div class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> -38% PROMO FLASH</div>
+                <div class="img-wrapper">
+                    <img src="gav1.jpg" alt="GAV">
+                </div>
+                <div class="contenu">
+                    <h2>Salle de Garde à Vue</h2>
+                    <p class="description">Salle complète aménagée pour le commissariat. Équipement prêt à l'emploi !</p>
+                    <div class="footer-card">
+                        <div class="prix-box">
+                            <span class="ancien-prix">3 542 €</span>
+                            <span class="prix promo-prix">2 200 €</span>
+                        </div>
+                        <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter btn-promo">
+                            <i class="fa-solid fa-fire"></i> Profiter !
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="carte"><div class="img-wrapper"><img src="chaises1.jpg" alt="Chaises"></div><div class="contenu"><h2>Lot de 5 Chaises</h2><p class="description">Mobilier pour aménagement de vos bureaux RP.</p><div class="footer-card"><p class="prix">1 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="bureaux1.jpg" alt="Bureaux"></div><div class="contenu"><h2>Bureaux</h2><p class="description">Ensemble complet pour vos services administratifs.</p><div class="footer-card"><p class="prix">2 643 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="dj1.jpg" alt="DJ"></div><div class="contenu"><h2>Matériel DJ</h2><p class="description">Équipement sonore pour animer vos événements.</p><div class="footer-card"><p class="prix">3 210 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="conteneur1.jpg" alt="Conteneur"></div><div class="contenu"><h2>Conteneur</h2><p class="description">Conteneur de stockage industriel et maritime.</p><div class="footer-card"><p class="prix">1 200 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="travaux1.jpg" alt="Travaux"></div><div class="contenu"><h2>Zone de Travaux</h2><p class="description">Matériel complet de balisage pour vos chantiers.</p><div class="footer-card"><p class="prix">2 400 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="barriere1.jpg" alt="Barriere"></div><div class="contenu"><h2>Barrière de Sécurité</h2><p class="description">Barrières robustes pour sécuriser les périmètres.</p><div class="footer-card"><p class="prix">1 100 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="bordure1.jpg" alt="Bordure"></div><div class="contenu"><h2>Bordure Routière</h2><p class="description">Éléments de bordure pour aménagement urbain.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="pneu1.jpg" alt="Pneu"></div><div class="contenu"><h2>Pneu</h2><p class="description">Pneus de rechange ou de décor pour vos garages.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="table1.jpg" alt="Tables"></div><div class="contenu"><h2>Lot de 2 Tables</h2><p class="description">Tables solides pour aménager vos espaces.</p><div class="footer-card"><p class="prix">1 400 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="camping1.jpg" alt="Camping"></div><div class="contenu"><h2>Équipement Camping</h2><p class="description">Matériel complet pour vos sorties en plein air.</p><div class="footer-card"><p class="prix">1 183 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="conteneurs1jpg.png" alt="Lot Conteneurs"></div><div class="contenu"><h2>Lot de Conteneurs</h2><p class="description">Ensemble de conteneurs pour vos grands dépôts.</p><div class="footer-card"><p class="prix">2 950 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="barriererouge1.jpg" alt="Barrière Rouge"></div><div class="contenu"><h2>Barrière Rouge</h2><p class="description">Barrière de contrôle et de sécurité visuelle.</p><div class="footer-card"><p class="prix">1 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="grillage1.jpg" alt="Grillage"></div><div class="contenu"><h2>Grillage</h2><p class="description">Clôture grillagée pour sécuriser vos terrains.</p><div class="footer-card"><p class="prix">1 500 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="bellechaise1.jpg" alt="Chaise Luxe"></div><div class="contenu"><h2>Chaise de Luxe</h2><p class="description">Siège de qualité pour intérieur haut de gamme.</p><div class="footer-card"><p class="prix">1 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="livres1.jpg" alt="Livres"></div><div class="contenu"><h2>Étagère de Livres</h2><p class="description">Rangement de livres idéal pour vos bureaux.</p><div class="footer-card"><p class="prix">900 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="metal1.jpg" alt="Metal"></div><div class="contenu"><h2>Plaques Métalliques</h2><p class="description">Plaques de métal pour constructions solides.</p><div class="footer-card"><p class="prix">1 230 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="plots1.jpg" alt="Plots"></div><div class="contenu"><h2>Lot de 10 Plots</h2><p class="description">Plots de signalisation pour réguler le trafic.</p><div class="footer-card"><p class="prix">3 640 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="poteau1.jpg" alt="Poteau"></div><div class="contenu"><h2>Poteau</h2><p class="description">Poteau pour balisage et sécurité des voies.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="tablechaise1.jpg" alt="Table Chaise"></div><div class="contenu"><h2>Table & Chaise</h2><p class="description">Ensemble complet pour aménagement d'espace.</p><div class="footer-card"><p class="prix">4 302 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="casierrouge.jpg" alt="Casier Rouge"></div><div class="contenu"><h2>Casier Rouge</h2><p class="description">Casier de rangement sécurisé couleur rouge.</p><div class="footer-card"><p class="prix">1 400 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="casierblanc.jpg" alt="Casier Blanc"></div><div class="contenu"><h2>Casier Blanc</h2><p class="description">Casier de rangement épuré couleur blanc.</p><div class="footer-card"><p class="prix">1 400 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="bureau1.jpg" alt="Bureau"></div><div class="contenu"><h2>Bureau</h2><p class="description">Mobilier de travail ergonomique pour intérieurs.</p><div class="footer-card"><p class="prix">3 740 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="lumiere1.jpg" alt="Lumiere"></div><div class="contenu"><h2>Lumière</h2><p class="description">Éclairage moderne pour vos bâtiments RP.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="fontaine1.jpg" alt="Fontaine"></div><div class="contenu"><h2>Fontaine</h2><p class="description">Fontaine décorative pour sublimer vos espaces.</p><div class="footer-card"><p class="prix">1 750 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="parasolbeige.jpg" alt="Parasol Beige"></div><div class="contenu"><h2>Parasol Beige</h2><p class="description">Parasol élégant idéal pour l'extérieur.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="parasolrouge.jpg" alt="Parasol Rouge"></div><div class="contenu"><h2>Parasol Rouge</h2><p class="description">Parasol couleur rouge pour terrasses et jardins.</p><div class="footer-card"><p class="prix">2 000 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="echelle1.jpg" alt="Echelles"></div><div class="contenu"><h2>Lot de 2 Échelles</h2><p class="description">Échelles pratiques pour chantiers et interventions.</p><div class="footer-card"><p class="prix">2 400 €</p><a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a></div></div></div>
+        </main>
+    </section>
+
+    <!-- PAGE 3 : AGENCE IMMOBILIÈRE -->
+    <section id="page-immobiliere" class="page-section">
+        <div class="section-title">
+            <h2>🏢 Agence Immobilière de Prestige</h2>
+            <p>Devenez propriétaire des plus belles résidences de la ville</p>
         </div>
 
-        <!-- Boutique 3 -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1595590424283-b8f17842773f?w=500&auto=format&fit=crop&q=60" alt="Pack Armes">
-          <div class="card-body">
-            <div class="card-title">Boutique Pack Armes VIP</div>
-            <p class="card-desc">Accès aux skins d'armes exclusifs, équipements légers et munitions réservées.</p>
-            <div class="card-footer">
-              <span class="card-price">20.00 €</span>
-              <button class="btn-buy">Acheter</button>
+        <main class="catalogue">
+            <!-- VILLA BEACH (GOLD ULTRA VIP) -->
+            <div class="carte carte-vip-gold">
+                <div class="badge-tag gold-tag"><i class="fa-solid fa-crown"></i> OFFRE LUXE VIP</div>
+                <div class="img-wrapper">
+                    <img src="beach1.jpg" alt="Beach">
+                </div>
+                <div class="contenu">
+                    <h2>Villa Beach <span class="badge-gold">PREMIUM</span></h2>
+                    <p class="description">Propriété d'exception en bord de mer. Piscine privée, vue imprenable !</p>
+                    <div class="footer-card">
+                        <div class="prix-box">
+                            <span class="ancien-prix">150 000 €</span>
+                            <span class="prix vip-prix">130 000 €</span>
+                        </div>
+                        <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter btn-vip">
+                            <i class="fa-solid fa-gem"></i> Réserver VIP
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Boutique 4 -->
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&auto=format&fit=crop&q=60" alt="Entreprises">
-          <div class="card-body">
-            <div class="card-title">Boutique Entreprise Custom</div>
-            <p class="card-desc">Création de votre propre entreprise sur mesure avec coffre, locaux et véhicules dédiés.</p>
-            <div class="card-footer">
-              <span class="card-price">40.00 €</span>
-              <button class="btn-buy">Acheter</button>
+            <!-- RÉSIDENCE BRONX (VENDU / ACHETÉ CYBERPUNK 10 000X MIEUX) -->
+            <div class="carte carte-vendu">
+                <div class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>
+                <div class="img-wrapper">
+                    <img src="bronx1.jpg" alt="Bronx">
+                    <div class="vendu-cyber-overlay">
+                        <div class="hologram-stamp">
+                            <i class="fa-solid fa-shield-xmark"></i>
+                            <span>NON DISPONIBLE</span>
+                            <small>PROPRIÉTÉ ACQUISE</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="contenu">
+                    <h2>Résidence Bronx</h2>
+                    <p class="description">Complexe urbain moderne au cœur du centre-ville.</p>
+                    <div class="footer-card">
+                        <p class="prix prix-vendu">100 000 €</p>
+                        <span class="btn-vendu-disabled">
+                            <i class="fa-solid fa-circle-xmark"></i> Indisponible
+                        </span>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
 
-      </div>
+            <div class="carte"><div class="img-wrapper"><img src="citadelle1.jpg" alt="Citadelle"></div><div class="contenu"><h2>La Citadelle</h2><p class="description">Grande propriété fortifiée idéalement située.</p><div class="footer-card"><p class="prix">50 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="lagrande.jpg" alt="La Grande"></div><div class="contenu"><h2>La Grande</h2><p class="description">Spacieuse demeure avec de multiples équipements.</p><div class="footer-card"><p class="prix">75 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="manoir1.jpg" alt="Manoir"></div><div class="contenu"><h2>Le Manoir</h2><p class="description">Bâtisse de charme au cadre confidentiel.</p><div class="footer-card"><p class="prix">50 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonnoir1.jpg" alt="Maison Noire"></div><div class="contenu"><h2>Maison Noire</h2><p class="description">Maison au style moderne et sombre d'exception.</p><div class="footer-card"><p class="prix">20 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="villamoderne1.jpg" alt="Villa Moderne"></div><div class="contenu"><h2>Villa Moderne</h2><p class="description">Magnifique villa avec design contemporain.</p><div class="footer-card"><p class="prix">40 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="grandmanoir1.jpg" alt="Grand Manoir"></div><div class="contenu"><h2>Grand Manoir</h2><p class="description">Somptueux domaine vaste et prestigieux.</p><div class="footer-card"><p class="prix">90 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonfoot1.jpg" alt="Maison Foot"></div><div class="contenu"><h2>Maison du Footballeur</h2><p class="description">Maison en face du concessionnaire avec terrain de foot.</p><div class="footer-card"><p class="prix">60 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonbeige1.jpg" alt="Maison Beige"></div><div class="contenu"><h2>Maison Beige</h2><p class="description">Jolie maison aux tons chaleureux et accueillants.</p><div class="footer-card"><p class="prix">35 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonecolo1.jpg" alt="Maison Ecolo"></div><div class="contenu"><h2>Maison Écolo</h2><p class="description">Panneaux solaires intégrés, située en face du stade.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisoncabano1.jpg" alt="Maison Cabanon"></div><div class="contenu"><h2>Maison & Cabanon</h2><p class="description">Belle maison disposant d'un cabanon dans le jardin.</p><div class="footer-card"><p class="prix">35 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonvoisine1.jpg" alt="Maison Voisine"></div><div class="contenu"><h2>Maison Voisine</h2><p class="description">Maison idéalement située à proximité d'une grande villa.</p><div class="footer-card"><p class="prix">20 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonbleu1.jpg" alt="Maison Bleue"></div><div class="contenu"><h2>Maison Bleue</h2><p class="description">Maison bleu foncé bénéficiant d'un grand jardin.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonecolocabanon1.jpg" alt="Ecolo Cabanon"></div><div class="contenu"><h2>Maison Écolo & Cabanon</h2><p class="description">Panneaux solaires et cabanon aménagé au jardin.</p><div class="footer-card"><p class="prix">30 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonchill1.jpg" alt="Maison Chill"></div><div class="contenu"><h2>Maison Chill</h2><p class="description">Ambiance détente avec parasol et tables de camping.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+        </main>
+    </section>
+
+    <!-- PAGE 4 : PANEL ADMINISTRATION (Accès sécurisé) -->
+    <section id="page-admin" class="page-section">
+        <div class="admin-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="font-family: 'Orbitron', sans-serif; color: #fff;">Panneau Administrateur</h2>
+                <button onclick="deconnexionAdmin()" class="btn-hero" style="background:#ff4d4d; color:#fff; padding:10px 20px; font-size:14px;">Déconnexion</button>
+            </div>
+
+            <!-- Ajouter un Build avec Image Locale -->
+            <div class="admin-card">
+                <h3><i class="fa-solid fa-plus-circle"></i> Ajouter un Élément à la Boutique</h3>
+                <form id="form-ajout-article" onsubmit="ajouterArticle(event)">
+                    <div class="admin-input-group">
+                        <label>Nom du Build / Aménagement :</label>
+                        <input type="text" id="article-nom" placeholder="Exemple : Pack Hélicoptère VIP" required>
+                    </div>
+                    <div class="admin-input-group">
+                        <label>Description :</label>
+                        <input type="text" id="article-desc" placeholder="Exemple : Accès aux hélicoptères de luxe" required>
+                    </div>
+                    <div class="admin-input-group">
+                        <label>Prix :</label>
+                        <input type="text" id="article-prix" placeholder="Exemple : 3 000 €" required>
+                    </div>
+                    <div class="admin-input-group">
+                        <label>Sélectionner l'image sur votre ordinateur :</label>
+                        <input type="file" id="article-file" accept="image/*" style="background:none; border:none; padding:0;" required>
+                    </div>
+                    <button type="submit" class="btn-modal-submit">Publier dans le Catalogue</button>
+                </form>
+            </div>
+
+            <!-- Module des Logs -->
+            <div class="admin-card">
+                <h3><i class="fa-solid fa-list-check"></i> Journaux d'Activités (Logs)</h3>
+                <table class="logs-table">
+                    <thead>
+                        <tr>
+                            <th>Horodatage</th>
+                            <th>Staff</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-container">
+                        <!-- Logs dynamiques -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de Page -->
+    <footer>
+        <p>© 2026 Brest RP — Serveur Officiel Emergency Hamburg. Design Ultra-NextGen.</p>
+    </footer>
+
+    <!-- MODAL DE CONNEXION ADMIN STYLISÉ CYBERPUNK -->
+    <div class="modal-overlay" id="login-modal">
+        <div class="modal-box">
+            <h2><i class="fa-solid fa-lock"></i> Accès Staff</h2>
+            <p class="subtitle">Veuillez vous identifier pour accéder à l'administration</p>
+            
+            <div class="error-alert" id="error-msg">Identifiant ou mot de passe incorrect !</div>
+            
+            <div class="admin-input-group">
+                <label>Identifiant</label>
+                <input type="text" id="admin-id" placeholder="Ex: BrestBrestStaff" autocomplete="off">
+            </div>
+            <div class="admin-input-group">
+                <label>Mot de passe</label>
+                <input type="password" id="admin-pass" placeholder="••••••••••••" autocomplete="off">
+            </div>
+            
+            <button class="btn-modal-submit" onclick="validerConnexion()">Connexion</button>
+            <button class="btn-modal-close" onclick="fermerModal()">Annuler</button>
+        </div>
     </div>
 
-    <!-- 2. VUE PANEL ADMIN (Accessible uniquement après connexion) -->
-    <div id="admin-view">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-        <h2 style="color:#fff;">Panneau d'Administration <span class="badge-status">Exclusif Staff</span></h2>
-        <button onclick="deconnexionAdmin()" style="background:#ff4d4d; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:700;">Déconnexion</button>
-      </div>
+    <script>
+        const ID_CORRECT = "BrestBrestStaff";
+        const MDP_CORRECT = "StaffRP1234";
+        let estConnecte = false;
 
-      <!-- Ajouter un article avec Image Locale -->
-      <div class="admin-card">
-        <h3>Ajouter un élément à la boutique (Image Locale)</h3>
-        <form id="form-ajout-article" onsubmit="ajouterArticle(event)">
-          <div class="input-group">
-            <label>Nom de l'article / boutique :</label>
-            <input type="text" id="article-nom" placeholder="Exemple : Pack Hélicoptère VIP" required>
-          </div>
-          <div class="input-group">
-            <label>Description :</label>
-            <input type="text" id="article-desc" placeholder="Exemple : Accès aux hélicoptères de luxe" required>
-          </div>
-          <div class="input-group">
-            <label>Prix :</label>
-            <input type="text" id="article-prix" placeholder="Exemple : 30.00 €" required>
-          </div>
-          <div class="input-group">
-            <label>Sélectionner le fichier image sur votre ordinateur :</label>
-            <input type="file" id="article-file" accept="image/*" style="background:none; border:none; padding:0;" required>
-          </div>
-          <button type="submit" class="btn-submit">Publier sur la boutique</button>
-        </form>
-      </div>
+        function switchPage(pageId, element) {
+            if (pageId === 'admin' && !estConnecte) {
+                ouvrirConnexionAdmin();
+                return;
+            }
 
-      <!-- Module des Logs -->
-      <div class="admin-card">
-        <h3>Journaux d'activités & Logs du Panel</h3>
-        <p style="font-size: 14px; color: #718096; margin-bottom: 15px;">Historique en temps réel des connexions et des modifications enregistrées.</p>
-        <table class="logs-table">
-          <thead>
-            <tr>
-              <th>Horodatage</th>
-              <th>Utilisateur</th>
-              <th>Action Réalisée</th>
-            </tr>
-          </thead>
-          <tbody id="logs-container">
-            <!-- Les logs apparaissent ici automatiquement -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
 
-  </div>
+            document.getElementById('page-' + pageId).classList.add('active');
+            if (element) {
+                element.classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-  <!-- MODAL DE CONNEXION ADMIN STYLISÉ -->
-  <div class="modal-overlay" id="login-modal">
-    <div class="modal-box">
-      <h2>Connexion Staff</h2>
-      <p class="subtitle">Identifiez-vous pour accéder au panneau d'administration</p>
-      
-      <div class="error-alert" id="error-msg">Identifiant ou mot de passe incorrect !</div>
-      
-      <div class="input-group">
-        <label>Identifiant</label>
-        <input type="text" id="admin-id" placeholder="Ex: BrestBrestStaff" autocomplete="off">
-      </div>
-      <div class="input-group">
-        <label>Mot de passe</label>
-        <input type="password" id="admin-pass" placeholder="••••••••••••" autocomplete="off">
-      </div>
-      
-      <button class="btn-submit" onclick="validerConnexion()">Se Connecter</button>
-      <button class="btn-cancel" onclick="fermerModal()">Annuler</button>
-    </div>
-  </div>
+        function ouvrirConnexionAdmin() {
+            if (estConnecte) {
+                switchPage('admin');
+            } else {
+                document.getElementById('login-modal').style.display = 'flex';
+            }
+        }
 
-  <script>
-    // Identifiants configurés
-    const ID_CORRECT = "BrestBrestStaff";
-    const MDP_CORRECT = "StaffRP1234";
+        function fermerModal() {
+            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('error-msg').style.display = 'none';
+        }
 
-    let estConnecte = false;
+        function validerConnexion() {
+            const idSaisi = document.getElementById('admin-id').value;
+            const passSaisi = document.getElementById('admin-pass').value;
 
-    // Enregistrement des logs
-    function ajouterLog(action) {
-      const container = document.getElementById('logs-container');
-      const dateHeure = new Date().toLocaleString('fr-FR');
+            if (idSaisi === ID_CORRECT && passSaisi === MDP_CORRECT) {
+                estConnecte = true;
+                fermerModal();
+                switchPage('admin');
+                ajouterLog("Connexion réussie au Panel Admin");
+                
+                document.getElementById('admin-id').value = '';
+                document.getElementById('admin-pass').value = '';
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${dateHeure}</td>
-        <td><strong style="color:#00ff88;">BrestBrestStaff</strong></td>
-        <td>${action}</td>
-      `;
-      container.prepend(tr);
-    }
+        function deconnexionAdmin() {
+            estConnecte = false;
+            switchPage('accueil');
+            alert("Vous vous êtes déconnecté du Panel Admin.");
+        }
 
-    // Gestion de l'affichage des vues
-    function afficherVue(vue) {
-      if (vue === 'admin' && !estConnecte) {
-        ouvrirConnexionAdmin();
-        return;
-      }
+        function ajouterLog(action) {
+            const container = document.getElementById('logs-container');
+            if (!container) return;
+            const dateHeure = new Date().toLocaleString('fr-FR');
 
-      document.getElementById('boutique-view').style.display = (vue === 'boutique') ? 'block' : 'none';
-      document.getElementById('admin-view').style.display = (vue === 'admin') ? 'block' : 'none';
-    }
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${dateHeure}</td>
+                <td><strong style="color:#00f2fe;">BrestBrestStaff</strong></td>
+                <td>${action}</td>
+            `;
+            container.prepend(tr);
+        }
 
-    // Contrôle du modal de connexion
-    function ouvrirConnexionAdmin() {
-      if (estConnecte) {
-        afficherVue('admin');
-      } else {
-        document.getElementById('login-modal').style.display = 'flex';
-      }
-    }
+        function ajouterArticle(e) {
+            e.preventDefault();
 
-    function fermerModal() {
-      document.getElementById('login-modal').style.display = 'none';
-      document.getElementById('error-msg').style.display = 'none';
-    }
+            const nom = document.getElementById('article-nom').value;
+            const desc = document.getElementById('article-desc').value;
+            const prix = document.getElementById('article-prix').value;
+            const fileInput = document.getElementById('article-file');
+            const file = fileInput.files[0];
 
-    function validerConnexion() {
-      const idSaisi = document.getElementById('admin-id').value;
-      const passSaisi = document.getElementById('admin-pass').value;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageSrc = event.target.result;
 
-      if (idSaisi === ID_CORRECT && passSaisi === MDP_CORRECT) {
-        estConnecte = true;
-        fermerModal();
-        afficherVue('admin');
-        ajouterLog("Connexion réussie au Panel Admin");
-        
-        // Nettoyage des champs de saisie
-        document.getElementById('admin-id').value = '';
-        document.getElementById('admin-pass').value = '';
-      } else {
-        document.getElementById('error-msg').style.display = 'block';
-      }
-    }
+                    const catalogue = document.getElementById('catalogue-builds');
+                    const newCard = document.createElement('div');
+                    newCard.className = 'carte';
+                    newCard.innerHTML = `
+                        <div class="img-wrapper"><img src="${imageSrc}" alt="${nom}"></div>
+                        <div class="contenu">
+                            <h2>${nom}</h2>
+                            <p class="description">${desc}</p>
+                            <div class="footer-card">
+                                <p class="prix">${prix}</p>
+                                <a href="https://discord.gg/K8sBJQZFhQ" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter</a>
+                            </div>
+                        </div>
+                    `;
+                    catalogue.prepend(newCard);
 
-    function deconnexionAdmin() {
-      estConnecte = false;
-      afficherVue('boutique');
-      alert("Vous vous êtes déconnecté du Panel Admin.");
-    }
+                    ajouterLog(`Ajout de l'élément "${nom}" (${prix})`);
+                    document.getElementById('form-ajout-article').reset();
+                    alert("L'élément a été ajouté avec succès au catalogue des builds !");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
-    // Envoi de l'article avec chargement d'image locale
-    function ajouterArticle(e) {
-      e.preventDefault();
+        function copySessionCode() {
+            const code = document.getElementById('session-code').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const subtext = document.getElementById('copy-text');
+                subtext.innerText = "⚡ CODE COPIÉ DANS LE PRESSE-PAPIER !";
+                subtext.style.color = "#00f2fe";
+                setTimeout(() => {
+                    subtext.innerText = "Cliquez pour copier instantanément";
+                    subtext.style.color = "var(--text-muted)";
+                }, 3000);
+            });
+        }
 
-      const nom = document.getElementById('article-nom').value;
-      const desc = document.getElementById('article-desc').value;
-      const prix = document.getElementById('article-prix').value;
-      const fileInput = document.getElementById('article-file');
-      const file = fileInput.files[0];
-
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          const imageSrc = event.target.result; // Récupère l'image depuis le fichier local
-
-          // Ajout de la nouvelle carte dans la boutique
-          const catalogue = document.getElementById('catalogue-boutiques');
-          const newCard = document.createElement('div');
-          newCard.className = 'card';
-          newCard.innerHTML = `
-            <img src="${imageSrc}" alt="${nom}">
-            <div class="card-body">
-              <div class="card-title">${nom}</div>
-              <p class="card-desc">${desc}</p>
-              <div class="card-footer">
-                <span class="card-price">${prix}</span>
-                <button class="btn-buy">Acheter</button>
-              </div>
-            </div>
-          `;
-          catalogue.appendChild(newCard);
-
-          // Enregistrement du log
-          ajouterLog(`Ajout de l'article "${nom}" (${prix}) avec l'image locale "${file.name}"`);
-
-          // Réinitialiser le formulaire
-          document.getElementById('form-ajout-article').reset();
-          alert("L'article avec votre image locale a été ajouté avec succès dans la boutique !");
+        window.onload = function() {
+            ajouterLog("Système initialisé.");
         };
-        reader.readAsDataURL(file);
-      }
-    }
-
-    // Initialisation du journal
-    window.onload = function() {
-      ajouterLog("Système initialisé avec succès.");
-    };
-  </script>
-
+    </script>
 </body>
 </html>
