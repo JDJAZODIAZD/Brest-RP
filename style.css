@@ -608,7 +608,7 @@ body {
 }
 
 /* ==========================================
-   STYLE VILLA BEACH (PROMO LUXE VIP GOLD & CYBER)
+   STYLE VILLA BEACH (PROMO LUXE VIP GOLD)
    ========================================== */
 .carte-villa-vip {
     border: 2px solid #ffb703 !important;
@@ -674,6 +674,54 @@ body {
     box-shadow: 0 8px 25px rgba(0, 242, 254, 0.8) !important;
     background: linear-gradient(135deg, #00f2fe, #00a8ff) !important;
     color: #fff !important;
+}
+
+/* ==========================================
+   STYLE BIEN VENDU / ACHETÉ
+   ========================================== */
+.carte-vendu {
+    opacity: 0.65;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    filter: grayscale(40%);
+}
+
+.carte-vendu:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.vendu-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(255, 50, 50, 0.85);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 900;
+    padding: 6px 14px;
+    border-radius: 20px;
+    z-index: 10;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.prix-vendu {
+    text-decoration: line-through;
+    color: var(--text-muted) !important;
+}
+
+.btn-vendu {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: not-allowed;
 }
 
 /* FOOTER */
