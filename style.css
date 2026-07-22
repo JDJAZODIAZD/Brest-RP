@@ -1,15 +1,15 @@
 /* style.css */
 :root {
-    --blue-neon: #3b82f6;
-    --blue-glow: #1d4ed8;
-    --cyan-accent: #38bdf8;
-    --purple-neon: #8b5cf6;
-    --discord-bg: #5865F2;
+    --primary-blue: #0b5ed7;
+    --accent-cyan: #38bdf8;
+    --neon-blue: #2563eb;
+    --neon-glow: rgba(37, 99, 235, 0.4);
+    --discord-color: #5865F2;
     --discord-hover: #4752C4;
     --price-green: #10b981;
-    --bg-dark: #030712;
-    --card-bg: rgba(15, 23, 42, 0.8);
-    --card-border: rgba(59, 130, 246, 0.2);
+    --bg-dark: #050811;
+    --card-bg: rgba(15, 23, 42, 0.75);
+    --card-border: rgba(255, 255, 255, 0.1);
     --text-white: #ffffff;
     --text-muted: #94a3b8;
 }
@@ -18,6 +18,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -27,111 +28,97 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    position: relative;
     overflow-x: hidden;
+    position: relative;
 }
 
+/* Effet lumineux de fond */
 .bg-glow {
-    position: fixed;
-    top: -250px;
+    position: absolute;
+    top: -200px;
     left: 50%;
     transform: translateX(-50%);
-    width: 1000px;
-    height: 1000px;
-    background: radial-gradient(circle, rgba(29, 78, 216, 0.18) 0%, rgba(3, 7, 18, 0) 70%);
+    width: 900px;
+    height: 900px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, rgba(5, 8, 17, 0) 70%);
     z-index: -1;
     pointer-events: none;
 }
 
+/* Header */
 header {
     text-align: center;
-    padding: 40px 20px 20px;
+    padding: 60px 20px 30px;
 }
 
 .badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    color: var(--cyan-accent);
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: var(--accent-cyan);
     padding: 6px 18px;
     border-radius: 50px;
     font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
 }
 
 header h1 {
-    font-size: 3.2rem;
+    font-size: 3.5rem;
     font-weight: 900;
-    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+    letter-spacing: -1px;
+    background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 header p {
     color: var(--text-muted);
-    font-size: 1.05rem;
-    margin-top: 5px;
+    font-size: 1.1rem;
+    margin-top: 8px;
 }
 
+/* Navigation Vitrée */
 nav {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 15px;
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 12px 25px;
+    background: rgba(10, 15, 30, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 15px 25px;
     position: sticky;
     top: 0;
     z-index: 100;
     border-bottom: 1px solid var(--card-border);
 }
 
-.nav-btn {
-    background: transparent;
-    border: none;
+nav a {
     color: var(--text-muted);
-    font-family: inherit;
+    text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    padding: 10px 22px;
+    padding: 10px 20px;
     border-radius: 12px;
-    cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.nav-btn:hover {
+nav a:hover {
     color: var(--text-white);
     background: rgba(255, 255, 255, 0.05);
 }
 
-.nav-btn.active {
-    color: var(--text-white);
-    background: var(--blue-glow);
-    box-shadow: 0 0 15px rgba(29, 78, 216, 0.6);
-}
-
 nav a.nav-discord {
-    background: var(--discord-bg);
+    background: var(--discord-color);
     color: white;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 10px 22px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 nav a.nav-discord:hover {
@@ -139,244 +126,231 @@ nav a.nav-discord:hover {
     box-shadow: 0 0 20px rgba(88, 101, 242, 0.5);
 }
 
-.page-section {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+/* ========================================= */
+/* BANNIÈRE RP NEON (Style Image)             */
+/* ========================================= */
+
+.section-accueil {
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
 }
 
-.page-section.active {
-    display: block;
-    opacity: 1;
-    animation: pageFadeIn 0.4s ease-out forwards;
+.rp-card-container {
+    width: 100%;
+    max-width: 950px;
+    background: #02040a;
+    border: 2px solid #1a2a5e;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 0 35px rgba(37, 99, 235, 0.3), inset 0 0 15px rgba(37, 99, 235, 0.1);
 }
 
-@keyframes pageFadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-container {
-    max-width: 1050px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.neon-card {
-    background: rgba(6, 11, 25, 0.95);
-    border: 2px solid rgba(37, 99, 235, 0.4);
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 0 50px rgba(37, 99, 235, 0.25), inset 0 0 20px rgba(37, 99, 235, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.neon-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(0,0,0,0) 70%);
-    pointer-events: none;
-}
-
-.card-topbar {
-    background: rgba(10, 20, 45, 0.8);
-    border: 1px solid rgba(59, 130, 246, 0.3);
-    border-radius: 16px;
-    padding: 16px 28px;
+/* Header de la carte RP */
+.rp-header-bar {
+    background: #030816;
+    border: 1.5px solid #1a3278;
+    border-radius: 12px;
+    padding: 12px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
 }
 
-.brand {
+.flag-title {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 
-.fr-flag { font-size: 1.8rem; }
+.flag-title .flag {
+    font-size: 1.6rem;
+}
 
-.brand-name {
-    font-size: 1.8rem;
+.flag-title h2 {
+    font-size: 1.6rem;
     font-weight: 900;
-    letter-spacing: 5px;
-    font-style: italic;
+    letter-spacing: 6px;
     color: #ffffff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
-.brand-name .dot { color: var(--blue-neon); }
+.mic-icon {
+    color: #8b5cf6;
+    font-size: 1.6rem;
+    filter: drop-shadow(0 0 8px #8b5cf6);
+}
 
-.audio-wave {
-    display: flex;
-    align-items: center;
+/* Grille RP */
+.rp-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: auto auto auto;
     gap: 12px;
 }
 
-.mic-glow {
-    font-size: 1.8rem;
-    color: var(--purple-neon);
-    filter: drop-shadow(0 0 10px #8b5cf6);
-}
-
-.neon-grid {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    grid-template-rows: 120px 110px 65px;
-    gap: 16px;
-}
-
-.grid-item {
-    background: rgba(11, 20, 42, 0.9);
-    border: 1.5px solid rgba(40, 75, 150, 0.4);
-    border-radius: 18px;
+.rp-box {
+    background: #04091a;
+    border: 1.5px solid #182e6d;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
     text-decoration: none;
     color: white;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rp-box:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+/* Box Discord Icon */
+.discord-icon-box {
+    grid-column: 1;
+    grid-row: 1;
+    height: 110px;
+    background: linear-gradient(135deg, #2b41b8 0%, #152166 100%);
+    font-size: 4rem;
+    color: white;
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Box Discord Link */
+.discord-link-box {
+    grid-column: 2;
+    grid-row: 1;
+    height: 110px;
+    justify-content: flex-start;
+    padding-left: 30px;
+    font-size: 2.5rem;
+    font-weight: 800;
+    gap: 10px;
+}
+
+.discord-link-box .arrow {
+    color: #6366f1;
+    font-size: 3rem;
+}
+
+.discord-link-box .prefix {
+    color: #818cf8;
+}
+
+.discord-link-box .code {
+    color: #ffffff;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+}
+
+/* Image Box */
+.image-box {
+    grid-column: 1;
+    grid-row: 2;
+    height: 100px;
+    background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&q=80') center/cover;
     position: relative;
     overflow: hidden;
 }
 
-.grid-item:hover {
-    border-color: var(--blue-neon);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-}
-
-.discord-box {
-    grid-column: 1;
-    grid-row: 1;
-    background: linear-gradient(135deg, #4f46e5 0%, #1e1b4b 100%);
-    font-size: 4.5rem;
-    flex-direction: column;
-}
-
-.discord-box .hover-text {
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.8;
-}
-
-.link-box {
-    grid-column: 2;
-    grid-row: 1;
-    justify-content: space-between;
-    padding: 0 35px;
-}
-
-.link-content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 2.8rem;
-    font-weight: 900;
-}
-
-.link-content .symbol { color: var(--purple-neon); }
-.link-content .prefix { color: #818cf8; }
-.link-content .main-code { 
-    color: #ffffff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-}
-
-.external-icon {
-    font-size: 1.5rem;
-    color: var(--text-muted);
-}
-
-.img-box {
-    grid-column: 1;
-    grid-row: 2;
-    background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=500&q=80') center/cover;
-}
-
-.img-gradient {
+.img-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(3, 7, 18, 0.8) 100%);
+    background: linear-gradient(180deg, rgba(5, 12, 35, 0.2) 0%, rgba(5, 12, 35, 0.8) 100%);
 }
 
-.tag {
+.img-badge {
     position: relative;
     z-index: 2;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 4px 10px;
+    border-radius: 6px;
     font-size: 0.75rem;
-    font-weight: 800;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 5px 12px;
-    border-radius: 8px;
+    font-weight: 700;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    letter-spacing: 1px;
 }
 
-.session-box {
+/* Code Session Box */
+.code-box {
     grid-column: 2;
     grid-row: 2;
+    height: 100px;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 35px;
+    padding-left: 30px;
+    justify-content: center;
+    gap: 4px;
 }
 
-.session-header {
-    color: #818cf8;
-    font-size: 0.95rem;
+.code-label {
+    color: #6366f1;
+    font-size: 0.9rem;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 4px;
+    gap: 8px;
 }
 
-.session-code {
-    font-size: 2.5rem;
-    font-weight: 900;
+.code-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ffffff;
     font-family: monospace;
-    letter-spacing: 3px;
-    color: white;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-.mic-box {
+/* Mic Small Box */
+.mic-small-box {
     grid-column: 1;
     grid-row: 3;
+    height: 60px;
     font-size: 1.8rem;
-    color: var(--purple-neon);
+    color: #8b5cf6;
 }
 
+/* Voc Obligatoire Box */
 .voc-box {
     grid-column: 2;
     grid-row: 3;
+    height: 60px;
     justify-content: flex-start;
-    padding-left: 30px;
+    padding-left: 25px;
     gap: 15px;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
     letter-spacing: 2px;
-    color: var(--cyan-accent);
+    color: #38bdf8;
+}
+
+.voc-box i {
+    font-size: 1.4rem;
+}
+
+/* ========================================= */
+/* BOUTIQUE / CATALOGUE                      */
+/* ========================================= */
+
+.section-boutique {
+    padding: 40px 20px 60px;
 }
 
 .section-title {
     text-align: center;
-    margin: 30px 0 40px;
+    margin-bottom: 40px;
 }
 
 .section-title h2 {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 800;
 }
 
-.section-title p { color: var(--text-muted); }
+.section-title p {
+    color: var(--text-muted);
+}
 
 .catalogue {
     display: grid;
@@ -384,15 +358,15 @@ nav a.nav-discord:hover {
     gap: 25px;
     max-width: 1350px;
     margin: 0 auto;
-    padding: 0 20px 60px;
 }
 
 .carte {
     background: var(--card-bg);
     backdrop-filter: blur(12px);
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
     border: 1px solid var(--card-border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     transition: all 0.35s ease;
     display: flex;
     flex-direction: column;
@@ -417,7 +391,9 @@ nav a.nav-discord:hover {
     transition: transform 0.5s ease;
 }
 
-.carte:hover img { transform: scale(1.08); }
+.carte:hover img {
+    transform: scale(1.08);
+}
 
 .contenu {
     padding: 20px;
@@ -427,7 +403,7 @@ nav a.nav-discord:hover {
 }
 
 .carte h2 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 6px;
 }
@@ -455,7 +431,7 @@ nav a.nav-discord:hover {
 }
 
 .btn-acheter {
-    background: var(--discord-bg);
+    background: var(--discord-color);
     color: white;
     text-decoration: none;
     font-weight: 600;
@@ -474,6 +450,7 @@ nav a.nav-discord:hover {
     box-shadow: 0 4px 15px rgba(88, 101, 242, 0.5);
 }
 
+/* Footer */
 footer {
     background: #02040a;
     text-align: center;
@@ -484,21 +461,32 @@ footer {
     margin-top: auto;
 }
 
+/* Responsiveness Mobile */
 @media (max-width: 768px) {
-    header h1 { font-size: 2.2rem; }
-    
-    .neon-grid {
+    header h1 {
+        font-size: 2.4rem;
+    }
+
+    .rp-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
     }
 
-    .discord-box, .img-box, .mic-box { display: none; }
-    
-    .link-box, .session-box, .voc-box {
+    .discord-icon-box, .image-box, .mic-small-box {
+        display: none;
+    }
+
+    .discord-link-box, .code-box, .voc-box {
         grid-column: 1;
-        grid-row: auto;
-        padding: 20px;
+        width: 100%;
+        padding-left: 15px;
     }
 
-    .link-content { font-size: 1.8rem; }
-    .brand-name { font-size: 1.2rem; letter-spacing: 2px; }
+    .discord-link-box {
+        font-size: 1.6rem;
+    }
+
+    .flag-title h2 {
+        font-size: 1.1rem;
+        letter-spacing: 3px;
+    }
+}
