@@ -363,6 +363,21 @@
         .badge-status-dispo { background: rgba(0, 255, 136, 0.2); color: #00ff88; border: 1px solid #00ff88; }
         .badge-status-vendu { background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d; }
         .badge-status-promo { background: rgba(255, 0, 200, 0.2); color: #ff00c8; border: 1px solid #ff00c8; }
+        
+        #sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 20, 38, 0.9);
+            border: 1px solid #00f2fe;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #00f2fe;
+            display: none;
+            z-index: 9999;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -370,6 +385,7 @@
     <div class="bg-glow"></div>
     <div class="bg-grid-overlay"></div>
     <div class="scanline"></div>
+    <div id="sync-indicator"><i class="fa-solid fa-rotate fa-spin"></i> Synchronisation avec GitHub...</div>
 
     <header class="header">
         <div class="header-status">
@@ -476,9 +492,7 @@
             <h2>🛒 Catalogue des Builds & Aménagements</h2>
             <p>Commandez vos aménagement sur-mesure directement sur Discord</p>
         </div>
-        <main class="catalogue" id="catalogue-builds">
-            <!-- Les éléments de base seront injectés ou chargés par script -->
-        </main>
+        <main class="catalogue" id="catalogue-builds"></main>
     </section>
 
     <!-- PAGE 3 : AGENCE IMMOBILIÈRE -->
@@ -487,9 +501,7 @@
             <h2>🏢 Agence Immobilière de Prestige</h2>
             <p>Devenez propriétaire des plus belles résidences de la ville</p>
         </div>
-        <main class="catalogue" id="catalogue-immo">
-            <!-- Les éléments de base seront injectés ou chargés par script -->
-        </main>
+        <main class="catalogue" id="catalogue-immo"></main>
     </section>
 
     <!-- PAGE 4 : PANEL ADMINISTRATION -->
@@ -517,7 +529,7 @@
             <div id="tab-manage-items" class="admin-tab-content active">
                 <div class="admin-card">
                     <h3><i class="fa-solid fa-pen-to-square"></i> Modifier / Vendre / Promos / Supprimer les Offres</h3>
-                    <p style="color:#8a99ad; font-size:13px; margin-bottom:20px;">Gérez l'état, le prix ou supprimez n'importe quelle annonce de la boutique ou de l'agence immobilière en direct.</p>
+                    <p style="color:#8a99ad; font-size:13px; margin-bottom:20px;">Gérez l'état, le prix ou supprimez n'importe quelle annonce. Les modifications sont poussées directement sur GitHub en temps réel.</p>
                     <div class="item-manage-grid" id="admin-items-list"></div>
                 </div>
             </div>
@@ -550,10 +562,10 @@
                             <input type="text" id="article-ancien-prix" placeholder="Ex: 80 000 €">
                         </div>
                         <div class="admin-input-group">
-                            <label>Lien de l'image (URL ou Fichier local) :</label>
-                            <input type="file" id="article-file" accept="image/*" style="border:none; padding:5px 0;">
+                            <label>Image de l'offre :</label>
+                            <input type="file" id="article-file" accept="image/*" style="border:none; padding:5px 0;" required>
                         </div>
-                        <button type="submit" class="btn-modal-submit"><i class="fa-solid fa-paper-plane"></i> Mettre en Ligne</button>
+                        <button type="submit" class="btn-modal-submit"><i class="fa-solid fa-paper-plane"></i> Mettre en Ligne & Push GitHub</button>
                     </form>
                 </div>
             </div>
@@ -572,9 +584,7 @@
                                 <th>Action Effectuée</th>
                             </tr>
                         </thead>
-                        <tbody id="logs-container">
-                            <!-- Logs persistants -->
-                        </tbody>
+                        <tbody id="logs-container"></tbody>
                     </table>
                 </div>
             </div>
@@ -605,95 +615,107 @@
     </div>
 
     <script>
+        // ================= CONFIGURATION GITHUB =================
+        const GITHUB_USER = "BrestRP"; 
+        const GITHUB_REPO = "Brest-RP";           
+        const GITHUB_TOKEN = "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";     
+        // ========================================================
+
         const ID_CORRECT = "BrestBrestStaff";
         const MDP_CORRECT = "StaffRP1234";
         let estConnecte = false;
+        let siteData = { items: [], logs: [] };
 
-        // Base de données par défaut initiale si le localStorage est vide
         const defaultBuilds = [
-            { id: 'item-gav', cat: 'boutique', title: 'Salle de Garde à Vue', desc: 'Salle complète aménagée pour le commissariat. Équipement prêt à l\'emploi !', price: '2 200 €', oldPrice: '3 542 €', img: 'gav1.jpg', isPromo: true, isVendu: false },
-            { id: 'item-chaises', cat: 'boutique', title: 'Lot de 5 Chaises', desc: 'Mobilier pour aménagement de vos bureaux RP.', price: '1 000 €', oldPrice: '', img: 'chaises1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-bureaux', cat: 'boutique', title: 'Bureaux', desc: 'Ensemble complet pour vos services administratifs.', price: '2 643 €', oldPrice: '', img: 'bureaux1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-dj', cat: 'boutique', title: 'Matériel DJ', desc: 'Équipement sonore pour animer vos événements.', price: '3 210 €', oldPrice: '', img: 'dj1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-conteneur', cat: 'boutique', title: 'Conteneur', desc: 'Conteneur de stockage industriel et maritime.', price: '1 200 €', oldPrice: '', img: 'conteneur1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-travaux', cat: 'boutique', title: 'Zone de Travaux', desc: 'Matériel complet de balisage pour vos chantiers.', price: '2 400 €', oldPrice: '', img: 'travaux1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-barriere', cat: 'boutique', title: 'Barrière de Sécurité', desc: 'Barrières robustes pour sécuriser les périmètres.', price: '1 100 €', oldPrice: '', img: 'barriere1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-bordure', cat: 'boutique', title: 'Bordure Routière', desc: 'Éléments de bordure pour aménagement urbain.', price: '2 000 €', oldPrice: '', img: 'bordure1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-pneu', cat: 'boutique', title: 'Pneu', desc: 'Pneus de rechange ou de décor pour vos garages.', price: '2 000 €', oldPrice: '', img: 'pneu1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-table', cat: 'boutique', title: 'Lot de 2 Tables', desc: 'Tables solides pour aménager vos espaces.', price: '1 400 €', oldPrice: '', img: 'table1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-camping', cat: 'boutique', title: 'Équipement Camping', desc: 'Matériel complet pour vos sorties en plein air.', price: '1 183 €', oldPrice: '', img: 'camping1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-conteneurs', cat: 'boutique', title: 'Lot de Conteneurs', desc: 'Ensemble de conteneurs pour vos grands dépôts.', price: '2 950 €', oldPrice: '', img: 'conteneurs1jpg.png', isPromo: false, isVendu: false },
-            { id: 'item-barriererouge', cat: 'boutique', title: 'Barrière Rouge', desc: 'Barrière de contrôle et de sécurité visuelle.', price: '1 000 €', oldPrice: '', img: 'barriererouge1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-grillage', cat: 'boutique', title: 'Grillage', desc: 'Clôture grillagée pour sécuriser vos terrains.', price: '1 500 €', oldPrice: '', img: 'grillage1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-bellechaise', cat: 'boutique', title: 'Chaise de Luxe', desc: 'Siège de qualité pour intérieur haut de gamme.', price: '1 000 €', oldPrice: '', img: 'bellechaise1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-livres', cat: 'boutique', title: 'Étagère de Livres', desc: 'Rangement de livres idéal pour vos bureaux.', price: '900 €', oldPrice: '', img: 'livres1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-metal', cat: 'boutique', title: 'Plaques Métalliques', desc: 'Plaques de métal pour constructions solides.', price: '1 230 €', oldPrice: '', img: 'metal1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-plots', cat: 'boutique', title: 'Lot de 10 Plots', desc: 'Plots de signalisation pour réguler le trafic.', price: '3 640 €', oldPrice: '', img: 'plots1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-poteau', cat: 'boutique', title: 'Poteau', desc: 'Poteau pour balisage et sécurité des voies.', price: '2 000 €', oldPrice: '', img: 'poteau1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-tablechaise', cat: 'boutique', title: 'Table & Chaise', desc: 'Ensemble complet pour aménagement d\'espace.', price: '4 302 €', oldPrice: '', img: 'tablechaise1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-casierrouge', cat: 'boutique', title: 'Casier Rouge', desc: 'Casier de rangement sécurisé couleur rouge.', price: '1 400 €', oldPrice: '', img: 'casierrouge.jpg', isPromo: false, isVendu: false },
-            { id: 'item-casierblanc', cat: 'boutique', title: 'Casier Blanc', desc: 'Casier de rangement épuré couleur blanc.', price: '1 400 €', oldPrice: '', img: 'casierblanc.jpg', isPromo: false, isVendu: false },
-            { id: 'item-bureau', cat: 'boutique', title: 'Bureau', desc: 'Mobilier de travail ergonomique pour intérieurs.', price: '3 740 €', oldPrice: '', img: 'bureau1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-lumiere', cat: 'boutique', title: 'Lumière', desc: 'Éclairage moderne pour vos bâtiments RP.', price: '2 000 €', oldPrice: '', img: 'lumiere1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-fontaine', cat: 'boutique', title: 'Fontaine', desc: 'Fontaine décorative pour sublimer vos espaces.', price: '1 750 €', oldPrice: '', img: 'fontaine1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-parasolbeige', cat: 'boutique', title: 'Parasol Beige', desc: 'Parasol élégant idéal pour l\'extérieur.', price: '2 000 €', oldPrice: '', img: 'parasolbeige.jpg', isPromo: false, isVendu: false },
-            { id: 'item-parasolrouge', cat: 'boutique', title: 'Parasol Rouge', desc: 'Parasol couleur rouge pour terrasses et jardins.', price: '2 000 €', oldPrice: '', img: 'parasolrouge.jpg', isPromo: false, isVendu: false },
-            { id: 'item-echelle', cat: 'boutique', title: 'Lot de 2 Échelles', desc: 'Échelles pratiques pour chantiers et interventions.', price: '2 400 €', oldPrice: '', img: 'echelle1.jpg', isPromo: false, isVendu: false }
+            { id: 'item-gav', cat: 'boutique', title: 'Salle de Garde à Vue', desc: 'Salle complète aménagée pour le commissariat.', price: '2 200 €', oldPrice: '3 542 €', img: 'gav1.jpg', isPromo: true, isVendu: false },
+            { id: 'item-chaises', cat: 'boutique', title: 'Lot de 5 Chaises', desc: 'Mobilier pour aménagement de vos bureaux RP.', price: '1 000 €', oldPrice: '', img: 'chaises1.jpg', isPromo: false, isVendu: false }
         ];
 
         const defaultImmo = [
-            { id: 'item-beach', cat: 'immobiliere', title: 'Villa Beach', desc: 'Propriété d\'exception en bord de mer. Piscine privée, vue imprenable !', price: '130 000 €', oldPrice: '150 000 €', img: 'beach1.jpg', isPromo: true, isVendu: false },
-            { id: 'item-bronx', cat: 'immobiliere', title: 'Résidence Bronx', desc: 'Complexe urbain moderne au cœur du centre-ville.', price: '100 000 €', oldPrice: '', img: 'bronx1.jpg', isPromo: false, isVendu: true },
-            { id: 'item-citadelle', cat: 'immobiliere', title: 'La Citadelle', desc: 'Grande propriété fortifiée idéalement située.', price: '50 000 €', oldPrice: '', img: 'citadelle1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-lagrande', cat: 'immobiliere', title: 'La Grande', desc: 'Spacieuse demeure avec de multiples équipements.', price: '75 000 €', oldPrice: '', img: 'lagrande.jpg', isPromo: false, isVendu: false },
-            { id: 'item-manoir', cat: 'immobiliere', title: 'Le Manoir', desc: 'Bâtisse de charme au cadre confidentiel.', price: '50 000 €', oldPrice: '', img: 'manoir1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonnoir', cat: 'immobiliere', title: 'Maison Noire', desc: 'Maison au style moderne et sombre d\'exception.', price: '20 000 €', oldPrice: '', img: 'maisonnoir1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-villamoderne', cat: 'immobiliere', title: 'Villa Moderne', desc: 'Magnifique villa avec design contemporain.', price: '40 000 €', oldPrice: '', img: 'villamoderne1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-grandmanoir', cat: 'immobiliere', title: 'Grand Manoir', desc: 'Somptueux domaine vaste et prestigieux.', price: '90 000 €', oldPrice: '', img: 'grandmanoir1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonfoot', cat: 'immobiliere', title: 'Maison du Footballeur', desc: 'Maison en face du concessionnaire avec terrain de foot.', price: '60 000 €', oldPrice: '', img: 'maisonfoot1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonbeige', cat: 'immobiliere', title: 'Maison Beige', desc: 'Jolie maison aux tons chaleureux et accueillants.', price: '35 000 €', oldPrice: '', img: 'maisonbeige1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonecolo', cat: 'immobiliere', title: 'Maison Écolo', desc: 'Panneaux solaires intégrés, située en face du stade.', price: '25 000 €', oldPrice: '', img: 'maisonecolo1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisoncabano', cat: 'immobiliere', title: 'Maison & Cabanon', desc: 'Belle maison disposant d\'un cabanon dans le jardin.', price: '35 000 €', oldPrice: '', img: 'maisoncabano1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonvoisine', cat: 'immobiliere', title: 'Maison Voisine', desc: 'Maison idéalement située à proximité d\'une grande villa.', price: '20 000 €', oldPrice: '', img: 'maisonvoisine1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonbleu', cat: 'immobiliere', title: 'Maison Bleue', desc: 'Maison bleu foncé bénéficiant d\'un grand jardin.', price: '25 000 €', oldPrice: '', img: 'maisonbleu1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonecolocabanon', cat: 'immobiliere', title: 'Maison Écolo & Cabanon', desc: 'Panneaux solaires et cabanon aménagé au jardin.', price: '30 000 €', oldPrice: '', img: 'maisonecolocabanon1.jpg', isPromo: false, isVendu: false },
-            { id: 'item-maisonchill', cat: 'immobiliere', title: 'Maison Chill', desc: 'Ambiance détente avec parasol et tables de camping.', price: '25 000 €', oldPrice: '', img: 'maisonchill1.jpg', isPromo: false, isVendu: false }
+            { id: 'item-beach', cat: 'immobiliere', title: 'Villa Beach', desc: 'Propriété d\'exception en bord de mer.', price: '130 000 €', oldPrice: '150 000 €', img: 'beach1.jpg', isPromo: true, isVendu: false }
         ];
 
-        // Chargement initial des données depuis le localStorage ou initialisation
-        function getStoredItems() {
-            const stored = localStorage.getItem('brest_rp_items');
-            if (!stored) {
-                const combined = [...defaultBuilds, ...defaultImmo];
-                localStorage.setItem('brest_rp_items', JSON.stringify(combined));
-                return combined;
+        async function loadDataFromGitHub() {
+            try {
+                const response = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data.json?nocache=` + Date.now(), {
+                    cache: 'no-store',
+                    headers: {
+                        'Cache-Control': 'no-cache, no-store, must-revalidate',
+                        'Pragma': 'no-cache',
+                        'Expires': '0'
+                    }
+                });
+                if (response.ok) {
+                    siteData = await response.json();
+                } else {
+                    siteData.items = [...defaultBuilds, ...defaultImmo];
+                    siteData.logs = [];
+                }
+            } catch (e) {
+                siteData.items = [...defaultBuilds, ...defaultImmo];
+                siteData.logs = [];
             }
-            return JSON.parse(stored);
+            renderSite();
         }
 
-        function saveStoredItems(items) {
-            localStorage.setItem('brest_rp_items', JSON.stringify(items));
+        async function pushToGitHub(path, contentBase64, message) {
+            document.getElementById('sync-indicator').style.display = 'block';
+            try {
+                let sha = null;
+                const getFileUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${path}`;
+                const checkRes = await fetch(getFileUrl, {
+                    headers: { "Authorization": `token ${GITHUB_TOKEN}` }
+                });
+                if (checkRes.ok) {
+                    const fileData = await checkRes.json();
+                    sha = fileData.sha;
+                }
+
+                const bodyData = {
+                    message: message,
+                    content: contentBase64
+                };
+                if (sha) bodyData.sha = sha;
+
+                const putRes = await fetch(getFileUrl, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${GITHUB_TOKEN}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(bodyData)
+                });
+
+                if (!putRes.ok) throw new Error("Erreur lors du push GitHub");
+            } catch (err) {
+                console.error(err);
+                alert("Erreur de synchronisation avec GitHub. Vérifiez vos identifiants.");
+            } finally {
+                document.getElementById('sync-indicator').style.display = 'none';
+            }
         }
 
-        function getStoredLogs() {
-            const stored = localStorage.getItem('brest_rp_logs');
-            return stored ? JSON.parse(stored) : [];
+        async function saveAndSync(actionLog) {
+            if (actionLog) {
+                const dateHeure = new Date().toLocaleString('fr-FR');
+                siteData.logs.unshift({ date: dateHeure, operator: 'BrestBrestStaff', action: actionLog });
+            }
+
+            const jsonString = JSON.stringify(siteData, null, 2);
+            const base64Content = btoa(unescape(encodeURIComponent(jsonString)));
+
+            await pushToGitHub("data.json", base64Content, actionLog || "Mise à jour des données du site");
+            renderSite();
         }
 
-        function saveStoredLogs(logs) {
-            localStorage.setItem('brest_rp_logs', JSON.stringify(logs));
-        }
-
-        // Rendu dynamique de tout le site web basé sur le localStorage
         function renderSite() {
-            const items = getStoredItems();
             const boutiqueContainer = document.getElementById('catalogue-builds');
             const immoContainer = document.getElementById('catalogue-immo');
 
             boutiqueContainer.innerHTML = '';
             immoContainer.innerHTML = '';
 
-            items.forEach(item => {
+            siteData.items.forEach(item => {
                 const card = document.createElement('div');
                 let cardClass = 'carte';
                 if (item.isPromo) cardClass += ' carte-promo';
@@ -702,49 +724,29 @@
                 card.id = item.id;
 
                 let badgeHTML = '';
-                if (item.isPromo) {
-                    badgeHTML += `<div class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> PROMO FLASH</div>`;
-                }
-                if (item.isVendu && item.cat === 'immobiliere') {
-                    badgeHTML += `<div class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>`;
-                }
+                if (item.isPromo) badgeHTML += `<div class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> PROMO FLASH</div>`;
+                if (item.isVendu && item.cat === 'immobiliere') badgeHTML += `<div class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>`;
 
-                let overlayHTML = '';
-                if (item.isVendu) {
-                    overlayHTML = `
-                        <div class="vendu-cyber-overlay">
-                            <div class="hologram-stamp">
-                                <i class="fa-solid fa-shield-xmark"></i>
-                                <span>NON DISPONIBLE</span>
-                                <small>PROPRIÉTÉ ACQUISE</small>
-                            </div>
+                let overlayHTML = item.isVendu ? `
+                    <div class="vendu-cyber-overlay">
+                        <div class="hologram-stamp">
+                            <i class="fa-solid fa-shield-xmark"></i>
+                            <span>NON DISPONIBLE</span>
+                            <small>PROPRIÉTÉ ACQUISE</small>
                         </div>
-                    `;
-                }
+                    </div>
+                ` : '';
 
                 let priceBoxHTML = '';
                 if (item.isPromo && item.oldPrice) {
-                    priceBoxHTML = `
-                        <div class="prix-box">
-                            <span class="ancien-prix">${item.oldPrice}</span>
-                            <span class="prix promo-prix card-price">${item.price}</span>
-                        </div>
-                    `;
+                    priceBoxHTML = `<div class="prix-box"><span class="ancien-prix">${item.oldPrice}</span><span class="prix promo-prix card-price">${item.price}</span></div>`;
                 } else if (item.isVendu) {
                     priceBoxHTML = `<p class="prix prix-vendu card-price">${item.price}</p>`;
                 } else {
                     priceBoxHTML = `<p class="prix card-price">${item.price}</p>`;
                 }
 
-                let actionBtnHTML = '';
-                if (item.isVendu) {
-                    actionBtnHTML = `<span class="btn-vendu-disabled"><i class="fa-solid fa-circle-xmark"></i> Indisponible</span>`;
-                } else {
-                    let discordLink = item.cat === 'immobiliere' ? 'https://discord.gg/x63Jg6jES7' : 'https://discord.gg/K8sBJQZFhQ';
-                    let btnText = item.cat === 'immobiliere' ? 'Réserver' : 'Acheter';
-                    let btnClass = item.isPromo ? 'btn-acheter btn-promo' : 'btn-acheter';
-                    actionBtnHTML = `<a href="${discordLink}" target="_blank" class="${btnClass}"><i class="fa-brands fa-discord"></i> ${btnText}</a>`;
-                }
+                let actionBtnHTML = item.isVendu ? `<span class="btn-vendu-disabled"><i class="fa-solid fa-circle-xmark"></i> Indisponible</span>` : `<a href="${item.cat === 'immobiliere' ? 'https://discord.gg/x63Jg6jES7' : 'https://discord.gg/K8sBJQZFhQ'}" target="_blank" class="${item.isPromo ? 'btn-acheter btn-promo' : 'btn-acheter'}"><i class="fa-brands fa-discord"></i> ${item.cat === 'immobiliere' ? 'Réserver' : 'Acheter'}</a>`;
 
                 card.innerHTML = `
                     ${badgeHTML}
@@ -762,11 +764,8 @@
                     </div>
                 `;
 
-                if (item.cat === 'immobiliere') {
-                    immoContainer.appendChild(card);
-                } else {
-                    boutiqueContainer.appendChild(card);
-                }
+                if (item.cat === 'immobiliere') immoContainer.appendChild(card);
+                else boutiqueContainer.appendChild(card);
             });
 
             renderLogsTable();
@@ -778,34 +777,24 @@
                 ouvrirConnexionAdmin();
                 return;
             }
-
-            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('page-' + pageId).classList.add('active');
             if (element) element.classList.add('active');
-
-            if (pageId === 'admin') {
-                chargerDashboardAdmin();
-            }
-
+            if (pageId === 'admin') chargerDashboardAdmin();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function showAdminTab(tabName, btn) {
-            document.querySelectorAll('.admin-tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
-
             document.getElementById('tab-' + tabName).classList.add('active');
             btn.classList.add('active');
         }
 
         function ouvrirConnexionAdmin() {
-            if (estConnecte) {
-                switchPage('admin');
-            } else {
-                document.getElementById('login-modal').style.display = 'flex';
-            }
+            if (estConnecte) switchPage('admin');
+            else document.getElementById('login-modal').style.display = 'flex';
         }
 
         function fermerModal() {
@@ -814,15 +803,10 @@
         }
 
         function validerConnexion() {
-            const idSaisi = document.getElementById('admin-id').value;
-            const passSaisi = document.getElementById('admin-pass').value;
-
-            if (idSaisi === ID_CORRECT && passSaisi === MDP_CORRECT) {
+            if (document.getElementById('admin-id').value === ID_CORRECT && document.getElementById('admin-pass').value === MDP_CORRECT) {
                 estConnecte = true;
                 fermerModal();
                 switchPage('admin');
-                ajouterLog("Connexion réussie au Panel Admin");
-                
                 document.getElementById('admin-id').value = '';
                 document.getElementById('admin-pass').value = '';
             } else {
@@ -833,22 +817,12 @@
         function deconnexionAdmin() {
             estConnecte = false;
             switchPage('accueil');
-            ajouterLog("Déconnexion du Panel Admin");
         }
 
-        function ajouterLog(action) {
-            const logs = getStoredLogs();
-            const dateHeure = new Date().toLocaleString('fr-FR');
-            logs.unshift({ date: dateHeure, operator: 'BrestBrestStaff', action: action });
-            saveStoredLogs(logs);
-            renderLogsTable();
-        }
-
-        function viderLogs() {
-            if (confirm("Voulez-vous vraiment effacer tous les journaux d'activités ?")) {
-                saveStoredLogs([]);
-                renderLogsTable();
-                alert("Tous les logs ont été supprimés.");
+        async function viderLogs() {
+            if (confirm("Voulez-vous vraiment effacer tous les journaux ?")) {
+                siteData.logs = [];
+                await saveAndSync("Suppression de tous les logs");
             }
         }
 
@@ -856,48 +830,32 @@
             const container = document.getElementById('logs-container');
             const countSpan = document.getElementById('log-count');
             if (!container) return;
-
-            const logs = getStoredLogs();
-            if (countSpan) countSpan.innerText = logs.length;
-
+            if (countSpan) countSpan.innerText = siteData.logs.length;
             container.innerHTML = '';
-            if (logs.length === 0) {
+            if (siteData.logs.length === 0) {
                 container.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#8a99ad;">Aucun journal d'activité enregistré.</td></tr>`;
                 return;
             }
-
-            logs.forEach(log => {
+            siteData.logs.forEach(log => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${log.date}</td>
-                    <td><strong style="color:#00f2fe;">${log.operator}</strong></td>
-                    <td>${log.action}</td>
-                `;
+                tr.innerHTML = `<td>${log.date}</td><td><strong style="color:#00f2fe;">${log.operator}</strong></td><td>${log.action}</td>`;
                 container.appendChild(tr);
             });
         }
 
-        // Dashboard Admin - Gestionnaire des items
         function chargerDashboardAdmin() {
             const grid = document.getElementById('admin-items-list');
             if (!grid) return;
             grid.innerHTML = '';
-
-            const items = getStoredItems();
-
-            items.forEach(item => {
-                const catName = item.cat === 'immobiliere' ? "Immobilier" : "Build";
-                let statusBadge = `<span class="status-badge-custom badge-status-dispo">Disponible</span>`;
-                if (item.isVendu) statusBadge = `<span class="status-badge-custom badge-status-vendu">Vendu / Indisponible</span>`;
-                if (item.isPromo) statusBadge = `<span class="status-badge-custom badge-status-promo">En Promo</span>`;
-
+            siteData.items.forEach(item => {
+                let statusBadge = item.isVendu ? `<span class="status-badge-custom badge-status-vendu">Vendu</span>` : (item.isPromo ? `<span class="status-badge-custom badge-status-promo">Promo</span>` : `<span class="status-badge-custom badge-status-dispo">Disponible</span>`);
                 const itemDiv = document.createElement('div');
                 itemDiv.className = 'admin-item-card';
                 itemDiv.innerHTML = `
                     <div class="admin-item-preview">
                         <img src="${item.img}" alt="Preview">
                         <div class="admin-item-details">
-                            <span class="badge-cat">${catName}</span>
+                            <span class="badge-cat">${item.cat}</span>
                             <h4>${item.title}</h4>
                             <div style="font-size:13px; color:#00f2fe; font-weight:bold;">Prix : ${item.price}</div>
                             ${statusBadge}
@@ -905,83 +863,70 @@
                     </div>
                     <div class="admin-controls-row">
                         <button class="btn-ctrl btn-ctrl-edit" onclick="modifierPrix('${item.id}')"><i class="fa-solid fa-euro-sign"></i> Prix</button>
-                        <button class="btn-ctrl btn-ctrl-status" onclick="toggleVendu('${item.id}')"><i class="fa-solid fa-lock"></i> Vendu/Dispo</button>
+                        <button class="btn-ctrl btn-ctrl-status" onclick="toggleVendu('${item.id}')"><i class="fa-solid fa-lock"></i> Vendu</button>
                         <button class="btn-ctrl btn-ctrl-promo" onclick="togglePromo('${item.id}')"><i class="fa-solid fa-bolt"></i> Promo</button>
-                        <button class="btn-ctrl btn-ctrl-del" onclick="supprimerCarte('${item.id}')"><i class="fa-solid fa-trash"></i> Supprimer</button>
+                        <button class="btn-ctrl btn-ctrl-del" onclick="supprimerCarte('${item.id}')"><i class="fa-solid fa-trash"></i> Suppr</button>
                     </div>
                 `;
                 grid.appendChild(itemDiv);
             });
         }
 
-        // Actions admin modifiant le state & localStorage
-        function modifierPrix(id) {
-            let items = getStoredItems();
-            const item = items.find(i => i.id === id);
+        async function modifierPrix(id) {
+            const item = siteData.items.find(i => i.id === id);
             if (!item) return;
-
             const nouveauPrix = prompt(`Nouveau prix pour "${item.title}" :`, item.price);
-            if (nouveauPrix !== null && nouveauPrix.trim() !== '') {
+            if (nouveauPrix) {
                 item.price = nouveauPrix;
-                saveStoredItems(items);
-                ajouterLog(`Prix modifié pour "${item.title}" -> ${nouveauPrix}`);
-                renderSite();
+                await saveAndSync(`Modification du prix de "${item.title}" à ${nouveauPrix}`);
             }
         }
 
-        function toggleVendu(id) {
-            let items = getStoredItems();
-            const item = items.find(i => i.id === id);
+        async function toggleVendu(id) {
+            const item = siteData.items.find(i => i.id === id);
             if (!item) return;
-
             item.isVendu = !item.isVendu;
-            saveStoredItems(items);
-            ajouterLog(`Statut de "${item.title}" changé en: ${item.isVendu ? 'VENDU / INDISPONIBLE' : 'DISPONIBLE'}`);
-            renderSite();
+            await saveAndSync(`Changement de statut pour "${item.title}" (${item.isVendu ? 'Vendu' : 'Disponible'})`);
         }
 
-        function togglePromo(id) {
-            let items = getStoredItems();
-            const item = items.find(i => i.id === id);
+        async function togglePromo(id) {
+            const item = siteData.items.find(i => i.id === id);
             if (!item) return;
-
             item.isPromo = !item.isPromo;
-            if (item.isPromo && !item.oldPrice) {
-                item.oldPrice = item.price; // Définit l'ancien prix automatiquement
-            }
-            saveStoredItems(items);
-            ajouterLog(`${item.isPromo ? 'Mise en promo' : 'Retrait de promo'} de "${item.title}"`);
-            renderSite();
+            if (item.isPromo && !item.oldPrice) item.oldPrice = item.price;
+            await saveAndSync(`Mise en promo/retrait promo de "${item.title}"`);
         }
 
-        function supprimerCarte(id) {
-            let items = getStoredItems();
-            const item = items.find(i => i.id === id);
+        async function supprimerCarte(id) {
+            const item = siteData.items.find(i => i.id === id);
             if (!item) return;
-
-            if (confirm(`Êtes-vous sûr de vouloir supprimer définitivement l'annonce "${item.title}" ?`)) {
-                items = items.filter(i => i.id !== id);
-                saveStoredItems(items);
-                ajouterLog(`Annonce supprimée: "${item.title}"`);
-                renderSite();
+            if (confirm(`Supprimer définitivement "${item.title}" ?`)) {
+                siteData.items = siteData.items.filter(i => i.id !== id);
+                await saveAndSync(`Suppression de l'annonce "${item.title}"`);
             }
         }
 
-        function ajouterArticle(e) {
+        async function ajouterArticle(e) {
             e.preventDefault();
-
             const cat = document.getElementById('article-categorie').value;
             const nom = document.getElementById('article-nom').value;
             const desc = document.getElementById('article-desc').value;
             const prix = document.getElementById('article-prix').value;
             const ancienPrix = document.getElementById('article-ancien-prix').value;
-            const fileInput = document.getElementById('article-file');
-            const file = fileInput.files[0];
+            const file = document.getElementById('article-file').files[0];
 
-            let imageSrc = 'gav1.jpg'; // Image par défaut si aucun fichier choisi
+            if (!file) return alert("Veuillez sélectionner une image !");
 
-            const processSave = (imgData) => {
-                let items = getStoredItems();
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const base64Full = event.target.result;
+                const base64DataOnly = base64Full.split(',')[1];
+                const fileName = `img_${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+
+                document.getElementById('sync-indicator').style.display = 'block';
+
+                await pushToGitHub(`images/${fileName}`, base64DataOnly, `Ajout image ${fileName}`);
+
                 const newItem = {
                     id: 'custom-' + Date.now(),
                     cat: cat,
@@ -989,51 +934,30 @@
                     desc: desc,
                     price: prix,
                     oldPrice: ancienPrix || '',
-                    img: imgData,
+                    img: `images/${fileName}`,
                     isPromo: Boolean(ancienPrix),
                     isVendu: false
                 };
 
-                items.unshift(newItem);
-                saveStoredItems(items);
-                ajouterLog(`Publication de la nouvelle offre "${nom}" (${prix}) dans ${cat}`);
+                siteData.items.unshift(newItem);
+                await saveAndSync(`Publication de "${nom}" (${prix})`);
                 
                 document.getElementById('form-ajout-article').reset();
-                alert("L'annonce a été publiée avec succès et enregistrée durablement !");
-                renderSite();
+                alert("Annonce publiée et synchronisée avec succès sur GitHub !");
             };
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    processSave(event.target.result);
-                };
-                reader.readAsDataURL(file);
-            } else {
-                processSave(imageSrc);
-            }
+            reader.readAsDataURL(file);
         }
 
         function copySessionCode() {
-            const code = document.getElementById('session-code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
+            navigator.clipboard.writeText(document.getElementById('session-code').innerText).then(() => {
                 const subtext = document.getElementById('copy-text');
-                subtext.innerText = "⚡ CODE COPIÉ DANS LE PRESSE-PAPIER !";
-                subtext.style.color = "#00f2fe";
-                setTimeout(() => {
-                    subtext.innerText = "Cliquez pour copier instantanément";
-                    subtext.style.color = "var(--text-muted)";
-                }, 3000);
+                subtext.innerText = "⚡ CODE COPIÉ !";
+                setTimeout(() => subtext.innerText = "Cliquez pour copier instantanément", 3000);
             });
         }
 
-        // Lancement au chargement complet de la page
         window.onload = function() {
-            renderSite();
-            // Log uniquement au premier lancement de session si vide
-            if (getStoredLogs().length === 0) {
-                ajouterLog("Système et Panel Admin initialisés avec succès.");
-            }
+            loadDataFromGitHub();
         };
     </script>
 </body>
