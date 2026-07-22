@@ -1,17 +1,18 @@
 /* ==========================================
-   RESET & VARIABLES GLOBALES
+   VARIABLES & DESIGN SYSTEM CYBERPUNK/LUXE
    ========================================== */
 :root {
-    --bg-dark: #0a0b10;
-    --bg-card: rgba(18, 22, 36, 0.65);
+    --bg-dark: #07080d;
+    --bg-card: rgba(15, 18, 30, 0.75);
     --primary: #5865f2;
-    --primary-glow: rgba(88, 101, 242, 0.4);
+    --primary-glow: rgba(88, 101, 242, 0.5);
     --accent: #00f2fe;
     --accent-glow: rgba(0, 242, 254, 0.4);
     --gold: #ffb703;
-    --text-main: #f1f5f9;
+    --green-live: #00f076;
+    --text-main: #f8fafc;
     --text-muted: #94a3b8;
-    --border-card: rgba(255, 255, 255, 0.08);
+    --border-card: rgba(255, 255, 255, 0.1);
     --font-main: 'Poppins', sans-serif;
 }
 
@@ -31,7 +32,7 @@ body {
 }
 
 /* ==========================================
-   FOND ANIMÉ HIGH-TECH (BG GLOW)
+   ARRIÈRE-PLAN LUMINEUX ET GRILLE TECH
    ========================================== */
 .bg-glow {
     position: fixed;
@@ -39,94 +40,130 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1;
+    z-index: -2;
     background: 
-        radial-gradient(circle at 15% 20%, rgba(88, 101, 242, 0.18) 0%, transparent 45%),
-        radial-gradient(circle at 85% 80%, rgba(0, 242, 254, 0.15) 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, rgba(120, 0, 255, 0.08) 0%, transparent 60%);
-    filter: blur(40px);
-    animation: pulseGlow 10s ease-in-out infinite alternate;
+        radial-gradient(circle at 10% 20%, rgba(88, 101, 242, 0.22) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.2) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.12) 0%, transparent 60%);
+    filter: blur(50px);
+    animation: bgPulse 12s ease-in-out infinite alternate;
 }
 
-@keyframes pulseGlow {
+.bg-grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+}
+
+@keyframes bgPulse {
     0% { transform: scale(1) translate(0, 0); }
-    50% { transform: scale(1.1) translate(-2%, 2%); }
-    100% { transform: scale(1) translate(2%, -2%); }
+    100% { transform: scale(1.1) translate(-2%, 2%); }
 }
 
 /* ==========================================
-   EN-TÊTE / HEADER
+   HEADER
    ========================================== */
 .header {
     text-align: center;
     padding: 3rem 1rem 1.5rem;
-    animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: fadeInDown 0.8s ease-out;
 }
 
-.logo-title h1 {
-    font-size: 3rem;
-    font-weight: 900;
-    letter-spacing: -1px;
-    background: linear-gradient(135deg, #ffffff 30%, var(--accent) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
-}
-
-.badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-card);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--accent);
-    margin-bottom: 12px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.header p {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-top: 5px;
-}
-
-/* ==========================================
-   NAVIGATION
-   ========================================== */
-nav {
+.header-status {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
-    padding: 10px 20px;
-    margin: 1.5rem auto 2.5rem;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.03);
+    margin-bottom: 12px;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 240, 118, 0.1);
+    border: 1px solid rgba(0, 240, 118, 0.3);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--green-live);
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--green-live);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--green-live);
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.logo-title h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #ffffff 20%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.4));
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    max-width: 650px;
+    margin: 8px auto 0;
+}
+
+/* ==========================================
+   BARRE DE NAVIGATION GLASSMORPHISM
+   ========================================== */
+.glass-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    margin: 2rem auto 3rem;
+    max-width: 850px;
+    background: rgba(18, 22, 36, 0.6);
     border: 1px solid var(--border-card);
-    backdrop-filter: blur(15px);
-    border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+    backdrop-filter: blur(20px);
+    border-radius: 60px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .nav-btn, .nav-discord {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    padding: 10px 22px;
+    padding: 12px 24px;
     font-size: 0.95rem;
     font-weight: 600;
-    border-radius: 30px;
+    border-radius: 40px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     text-decoration: none;
 }
 
@@ -139,7 +176,7 @@ nav {
 .nav-btn.active {
     color: #fff;
     background: linear-gradient(135deg, var(--primary), #4752c4);
-    box-shadow: 0 4px 20px var(--primary-glow);
+    box-shadow: 0 6px 25px var(--primary-glow);
 }
 
 .nav-discord {
@@ -151,36 +188,245 @@ nav {
 .nav-discord:hover {
     background: var(--primary);
     color: #fff;
-    box-shadow: 0 4px 20px var(--primary-glow);
+    box-shadow: 0 6px 25px var(--primary-glow);
     transform: translateY(-2px);
 }
 
 /* ==========================================
-   SECTIONS & ANIMATION DE PAGE
+   PAGE 1 : ACCUEIL HERO MASTER
+   ========================================== */
+.hero-master {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 4rem;
+}
+
+.hero-banner-card {
+    position: relative;
+    background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.25), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(0, 242, 254, 0.15), transparent 60%),
+                var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
+    padding: 3.5rem 3rem;
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+}
+
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.fr-flag-badge {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-card);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.live-mic {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 0, 85, 0.1);
+    border: 1px solid rgba(255, 0, 85, 0.3);
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: #ff2e63;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.sound-wave {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 12px;
+}
+
+.sound-wave span {
+    width: 3px;
+    height: 100%;
+    background-color: #ff2e63;
+    border-radius: 3px;
+    animation: wave 1s infinite alternate ease-in-out;
+}
+
+.sound-wave span:nth-child(2) { animation-delay: 0.2s; }
+.sound-wave span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes wave {
+    0% { transform: scaleY(0.2); }
+    100% { transform: scaleY(1); }
+}
+
+.hero-main-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+}
+
+.hero-glow-text {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 750px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-hero {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+}
+
+.btn-hero-primary {
+    background: linear-gradient(135deg, var(--primary), #404eed);
+    color: #fff;
+    box-shadow: 0 10px 30px var(--primary-glow);
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(88, 101, 242, 0.7);
+}
+
+.btn-hero-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid var(--border-card);
+}
+
+.btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+}
+
+/* ==========================================
+   DASHBOARD GRID (ACCUEIL)
+   ========================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.dash-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 22px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    backdrop-filter: blur(15px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.dash-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.dash-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.discord-color { color: #5865f2; background: rgba(88, 101, 242, 0.1); }
+.mic-color { color: #ff2e63; background: rgba(255, 46, 99, 0.1); }
+.game-color { color: var(--gold); background: rgba(255, 183, 3, 0.1); }
+
+.dash-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.dash-code-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 2px 0;
+}
+
+.dash-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 2px 0;
+}
+
+.dash-subtext {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* ==========================================
+   SECTIONS & CATALOGUES
    ========================================== */
 .page-section {
     display: none;
     opacity: 0;
-    transform: translateY(20px) scale(0.98);
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(20px);
+    transition: all 0.5s ease;
 }
 
 .page-section.active {
     display: block;
     opacity: 1;
-    transform: translateY(0) scale(1);
-    animation: pageReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes pageReveal {
-    from {
-        opacity: 0;
-        transform: translateY(25px) scale(0.98);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    transform: translateY(0);
 }
 
 .section-title {
@@ -189,141 +435,14 @@ nav {
 }
 
 .section-title h2 {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.2rem;
+    font-weight: 800;
 }
 
 .section-title p {
     color: var(--text-muted);
 }
 
-/* ==========================================
-   CARTE BANNER NEON (ACCUEIL)
-   ========================================== */
-.hero-container {
-    display: flex;
-    justify-content: center;
-    padding: 0 20px;
-}
-
-.neon-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-card);
-    border-radius: 24px;
-    padding: 2rem;
-    width: 100%;
-    max-width: 900px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-}
-
-.neon-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(transparent, transparent, transparent, var(--accent));
-    animation: rotateBorder 6s linear infinite;
-    z-index: -1;
-    opacity: 0.2;
-}
-
-@keyframes rotateBorder {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.card-topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.brand-name {
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-.brand-name .dot {
-    color: var(--accent);
-}
-
-.audio-wave {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.audio-wave .bar {
-    width: 3px;
-    height: 15px;
-    background: var(--accent);
-    border-radius: 3px;
-    animation: wave 1s ease-in-out infinite alternate;
-}
-
-.audio-wave .bar:nth-child(2) { animation-delay: 0.2s; height: 22px; }
-.audio-wave .bar:nth-child(3) { animation-delay: 0.4s; height: 12px; }
-
-@keyframes wave {
-    0% { transform: scaleY(0.3); }
-    100% { transform: scaleY(1.1); }
-}
-
-.neon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.grid-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-card);
-    border-radius: 16px;
-    padding: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    color: #fff;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.grid-item:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.discord-box i {
-    font-size: 2.5rem;
-    color: var(--primary);
-    transition: transform 0.3s ease;
-}
-
-.discord-box:hover i {
-    transform: scale(1.2) rotate(-10deg);
-}
-
-.session-code {
-    font-size: 1.3rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-top: 5px;
-}
-
-/* ==========================================
-   GRILLE DES CATALOGUES (BOUTIQUE & IMMOBILIER)
-   ========================================== */
 .catalogue {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -345,23 +464,19 @@ nav {
     display: flex;
     flex-direction: column;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .carte:hover {
-    transform: translateY(-10px) scale(1.02);
-    border-color: rgba(0, 242, 254, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15),
-                0 0 20px rgba(88, 101, 242, 0.1);
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(0, 242, 254, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.15);
 }
 
-/* IMAGE WITH GLOW & ZOOM */
 .img-wrapper {
-    position: relative;
     width: 100%;
     height: 200px;
     overflow: hidden;
+    position: relative;
 }
 
 .img-wrapper img {
@@ -375,17 +490,6 @@ nav {
     transform: scale(1.1);
 }
 
-.img-wrapper::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(to top, rgba(18, 22, 36, 1), transparent);
-}
-
-/* CONTENU DE LA CARTE */
 .contenu {
     padding: 1.5rem;
     display: flex;
@@ -395,11 +499,9 @@ nav {
 }
 
 .contenu h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-bottom: 8px;
-    color: #fff;
-    transition: color 0.3s ease;
+    margin-bottom: 6px;
 }
 
 .carte:hover .contenu h2 {
@@ -407,18 +509,15 @@ nav {
 }
 
 .description {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--text-muted);
-    line-height: 1.5;
     margin-bottom: 1.2rem;
 }
 
-/* PIED DE CARTE (PRIX + BOUTON) */
 .footer-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
     padding-top: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -427,94 +526,41 @@ nav {
     font-size: 1.2rem;
     font-weight: 800;
     color: #fff;
-    background: linear-gradient(135deg, #ffffff, var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .btn-acheter {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
     background: linear-gradient(135deg, var(--primary), #404eed);
     color: #fff;
     text-decoration: none;
-    padding: 8px 18px;
+    padding: 8px 16px;
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px var(--primary-glow);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .btn-acheter:hover {
-    background: linear-gradient(135deg, #6975f3, #5865f2);
-    box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6);
+    box-shadow: 0 5px 20px rgba(88, 101, 242, 0.6);
     transform: scale(1.05);
 }
 
-.btn-acheter i {
-    font-size: 1rem;
-}
-
-/* ==========================================
-   FOOTER
-   ========================================== */
+/* FOOTER */
 footer {
     text-align: center;
-    padding: 2rem;
+    padding: 2.5rem;
     color: var(--text-muted);
     font-size: 0.85rem;
     border-top: 1px solid var(--border-card);
-    background: rgba(10, 11, 16, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(7, 8, 13, 0.9);
 }
 
-/* ==========================================
-   ANIMATIONS KEYFRAMES GLOBALES
-   ========================================== */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ==========================================
-   RESPONSIVE DESIGN
-   ========================================== */
+/* RESPONSIVE */
 @media (max-width: 768px) {
-    .header h1 {
-        font-size: 2.2rem;
-    }
-    
-    nav {
-        border-radius: 20px;
-        padding: 8px;
-    }
-
-    .nav-btn, .nav-discord {
-        padding: 8px 14px;
-        font-size: 0.85rem;
-    }
-
-    .catalogue {
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 15px;
-    }
+    .logo-title h1 { font-size: 2.2rem; }
+    .hero-banner-card { padding: 2rem 1.5rem; }
+    .hero-main-title { font-size: 2rem; }
+    .glass-nav { flex-wrap: wrap; border-radius: 25px; }
 }
