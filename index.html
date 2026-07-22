@@ -1,534 +1,162 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brest RP - Serveur & Boutique Officielle</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion Panel Admin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background-color: #1a1a1a;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-card {
+      background: #2b2b2b;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      width: 100%;
+      max-width: 400px;
+    }
+    h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #4CAF50;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+    input[type="text"], input[type="password"], input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background: #333;
+      color: #fff;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .error {
+      color: #ff4d4d;
+      margin-bottom: 15px;
+      text-align: center;
+      display: none;
+    }
+    /* Style du Panel Admin (caché par défaut) */
+    #admin-panel {
+      display: none;
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- FX d'arrière-plan Cyberpunk -->
-    <div class="bg-glow"></div>
-    <div class="bg-grid-overlay"></div>
-    <div class="scanline"></div>
+  <!-- 1. PAGE DE CONNEXION -->
+  <div class="login-card" id="login-box">
+    <h2>Connexion Admin</h2>
+    <div class="error" id="error-msg">Identifiant ou mot de passe incorrect !</div>
+    
+    <div class="form-group">
+      <label>Identifiant</label>
+      <input type="text" id="username" placeholder="Entrez votre identifiant">
+    </div>
+    
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input type="password" id="password" placeholder="Entrez votre mot de passe">
+    </div>
+    
+    <button onclick="seConnecter()">Se connecter</button>
+  </div>
 
-    <!-- En-tête Principal -->
-    <header class="header">
-        <div class="header-status">
-            <span class="status-badge pulse-green">
-                <span class="status-dot"></span> SERVEUR EN LIGNE
-            </span>
-            <span class="badge"><i class="fa-solid fa-shield-halved"></i> Emergency Hamburg</span>
-        </div>
-        <div class="logo-title">
-            <h1>🚔 BREST <span class="text-gradient">ROLEPLAY</span></h1>
-        </div>
-        <p class="subtitle">L'expérience RP ultime sur Roblox — Immersion, Exclusivité & Communauté</p>
-    </header>
-
-    <!-- Navigation Bar Floating Glass -->
-    <nav class="glass-nav">
-        <button class="nav-btn active" onclick="switchPage('accueil')">
-            <i class="fa-solid fa-house"></i> <span>Accueil</span>
-        </button>
-        <button class="nav-btn" onclick="switchPage('boutique')">
-            <i class="fa-solid fa-cart-shopping"></i> <span>Boutique Builds</span>
-        </button>
-        <button class="nav-btn" onclick="switchPage('immobiliere')">
-            <i class="fa-solid fa-building"></i> <span>Agence Immobilière</span>
-        </button>
-        <button class="nav-btn btn-admin-tab" onclick="switchPage('admin')">
-            <i class="fa-solid fa-user-gear"></i> <span>Panel Admin</span>
-        </button>
-        <a href="https://discord.gg/gfYK88ADYt" target="_blank" rel="noopener noreferrer" class="nav-discord">
-            <i class="fa-brands fa-discord"></i> <span>Discord RP</span>
-        </a>
-    </nav>
-
-    <!-- PAGE 1 : ACCUEIL -->
-    <section id="page-accueil" class="page-section active">
-        <div class="hero-master">
-            <div class="hero-banner-card">
-                <div class="hero-content">
-                    <div class="hero-top">
-                        <span class="fr-flag-badge">🇫🇷 SERVEUR FRANÇAIS</span>
-                        <div class="live-mic">
-                            <span class="sound-wave">
-                                <span></span><span></span><span></span>
-                            </span>
-                            <span class="mic-text"><i class="fa-solid fa-microphone"></i> VOCAL OBLIGATOIRE</span>
-                        </div>
-                    </div>
-                    
-                    <h2 class="hero-main-title">REJOINS L'AVENTURE <br><span class="hero-glow-text">BREST ROLEPLAY</span></h2>
-                    <p class="hero-desc">Découvre une ville ultra-vivante, des métiers exclusifs, une économie dynamique et des biens uniques au monde sur Emergency Hamburg.</p>
-                    
-                    <div class="hero-actions">
-                        <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="btn-hero btn-hero-primary">
-                            <i class="fa-brands fa-discord"></i> Rejoindre la Communauté
-                        </a>
-                        <button class="btn-hero btn-hero-secondary" onclick="copySessionCode()">
-                            <i class="fa-solid fa-copy"></i> Copier le Code Session
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="dashboard-grid">
-                <div class="dash-card session-card" onclick="copySessionCode()">
-                    <div class="dash-icon"><i class="fa-solid fa-key"></i></div>
-                    <div class="dash-info">
-                        <span class="dash-label">CODE DE SESSION ACTIF</span>
-                        <div class="dash-code-box">
-                            <span id="session-code">m727gwhr</span>
-                            <i class="fa-regular fa-copy copy-icon"></i>
-                        </div>
-                        <span class="dash-subtext" id="copy-text">Cliquez pour copier instantanément</span>
-                    </div>
-                </div>
-
-                <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="dash-card discord-card">
-                    <div class="dash-icon discord-color"><i class="fa-brands fa-discord"></i></div>
-                    <div class="dash-info">
-                        <span class="dash-label">DISCORD PRINCIPAL</span>
-                        <span class="dash-val">discord.gg/gfYK88ADYt</span>
-                        <span class="dash-subtext">Rejoins +1000 membres actifs »</span>
-                    </div>
-                </a>
-
-                <div class="dash-card feature-card">
-                    <div class="dash-icon mic-color"><i class="fa-solid fa-headset"></i></div>
-                    <div class="dash-info">
-                        <span class="dash-label">RÈGLEMENT VOCAL</span>
-                        <span class="dash-val">Micro Requis</span>
-                        <span class="dash-subtext">Immersion RP 100% garantie</span>
-                    </div>
-                </div>
-
-                <div class="dash-card feature-card">
-                    <div class="dash-icon game-color"><i class="fa-solid fa-gamepad"></i></div>
-                    <div class="dash-info">
-                        <span class="dash-label">PLATEFORME</span>
-                        <span class="dash-val">Emergency Hamburg</span>
-                        <span class="dash-subtext">Session privée sécurisée</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PAGE 2 : BOUTIQUE BUILDS -->
-    <section id="page-boutique" class="page-section">
-        <div class="section-title">
-            <h2>🛒 Catalogue des Builds & Aménagements</h2>
-            <p>Commandez vos aménagements sur-mesure directement sur Discord</p>
-        </div>
-
-        <main class="catalogue" id="container-boutique">
-            <!-- Les cartes seront affichées dynamiquement via JS -->
-        </main>
-    </section>
-
-    <!-- PAGE 3 : AGENCE IMMOBILIÈRE -->
-    <section id="page-immobiliere" class="page-section">
-        <div class="section-title">
-            <h2>🏢 Agence Immobilière de Prestige</h2>
-            <p>Devenez propriétaire des plus belles résidences de la ville</p>
-        </div>
-
-        <main class="catalogue" id="container-immobiliere">
-            <!-- Les cartes seront affichées dynamiquement via JS -->
-        </main>
-    </section>
-
-    <!-- PAGE 4 : PANEL ADMIN -->
-    <section id="page-admin" class="page-section">
-        <div class="section-title">
-            <h2>⚙️ Panel d'Administration</h2>
-            <p>Gérez les annonces, prix, promotions, statuts et ajoutez de nouveaux articles</p>
-        </div>
-
-        <div class="admin-grid">
-            <!-- FORMULAIRE D'AJOUT / MODIFICATION -->
-            <div class="admin-card-box">
-                <h3 id="admin-form-title"><i class="fa-solid fa-plus-circle"></i> Ajouter une annonce</h3>
-                <form id="form-item" onsubmit="saveItem(event)">
-                    <input type="hidden" id="item-id">
-                    
-                    <div class="form-group">
-                        <label>Catégorie</label>
-                        <select id="item-category" required>
-                            <option value="boutique">Boutique Builds</option>
-                            <option value="immobiliere">Agence Immobilière</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Titre de l'annonce</label>
-                        <input type="text" id="item-title" placeholder="Ex: Villa Beach, Lot de chaises..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea id="item-desc" rows="3" placeholder="Description complète de l'article..." required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>URL / Fichier de l'image</label>
-                        <input type="text" id="item-img" placeholder="Ex: beach1.jpg" required>
-                    </div>
-
-                    <div class="form-group-row">
-                        <div class="form-group">
-                            <label>Prix Normal (€)</label>
-                            <input type="number" id="item-price" placeholder="Ex: 25000" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Prix Promo (€) (Optionnel)</label>
-                            <input type="number" id="item-promo-price" placeholder="Ex: 20000">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Lien Discord / Achat</label>
-                        <input type="url" id="item-link" placeholder="https://discord.gg/..." required>
-                    </div>
-
-                    <div class="form-group-row">
-                        <div class="form-group checkbox-group">
-                            <label><input type="checkbox" id="item-is-promo"> ⚡ Mettre en Promo Flash</label>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <label><input type="checkbox" id="item-is-vip"> 👑 Offre VIP / Luxe</label>
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <label><input type="checkbox" id="item-is-sold"> 🔒 Marquer comme VENDU</label>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-admin btn-save"><i class="fa-solid fa-check"></i> Enregistrer</button>
-                        <button type="button" class="btn-admin btn-cancel" onclick="resetForm()"><i class="fa-solid fa-xmark"></i> Annuler</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- LISTE DES ARTICLES POUR GESTION -->
-            <div class="admin-card-box">
-                <h3><i class="fa-solid fa-list-check"></i> Gestion des Annonces Actives</h3>
-                <div class="admin-items-list" id="admin-items-list">
-                    <!-- Liste générée par JS -->
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL DE PRÉVISUALISATION ARTICLE -->
-    <div id="modal-preview" class="modal-overlay">
-        <div class="modal-card">
-            <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-body">
-                <div class="modal-img-container">
-                    <img id="modal-img" src="" alt="Aperçu">
-                    <div id="modal-badge-container"></div>
-                </div>
-                <div class="modal-info">
-                    <h2 id="modal-title"></h2>
-                    <p id="modal-desc" class="modal-description"></p>
-                    <div class="modal-price-box" id="modal-price-box"></div>
-                    <div class="modal-actions">
-                        <a id="modal-buy-btn" href="" target="_blank" class="btn-hero btn-hero-primary">
-                            <i class="fa-brands fa-discord"></i> Commander / Réserver sur Discord
-                        </a>
-                        <button class="btn-hero btn-hero-secondary" onclick="closeModal()">Fermer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <!-- 2. PANNEAU ADMIN (Accessible uniquement après connexion) -->
+  <div class="login-card" id="admin-panel">
+    <h2>Panel Admin - Bienvenue !</h2>
+    <p>Vous êtes connecté avec accès exclusif.</p>
+    <hr style="border-color: #444; margin: 20px 0;">
+    
+    <h3>Ajouter une image locale</h3>
+    <div class="form-group">
+      <label>Sélectionner une image depuis votre ordinateur :</label>
+      <input type="file" id="image-file" accept="image/*" onchange="apercuImage(event)">
     </div>
 
-    <!-- Pied de Page -->
-    <footer>
-        <p>© 2026 Brest RP — Serveur Officiel Emergency Hamburg. Design Ultra-NextGen.</p>
-    </footer>
+    <!-- Aperçu de l'image locale -->
+    <div id="preview-container" style="margin-top: 15px; text-align: center;">
+      <img id="preview" src="" alt="Aperçu" style="max-width: 100%; display: none; border-radius: 5px;">
+    </div>
+    
+    <button onclick="seDeconnecter()" style="background-color: #d32f2f; margin-top: 20px;">Déconnexion</button>
+  </div>
 
-    <!-- SCRIPT APPLICATION & ADMIN PANEL -->
-    <script>
-        // Données par défaut initiales
-        const defaultItems = [
-            // Boutique
-            { id: 1, category: "boutique", title: "Salle de Garde à Vue", desc: "Salle complète aménagée pour le commissariat. Équipement prêt à l'emploi !", img: "gav1.jpg", price: 3542, promoPrice: 2200, link: "https://discord.gg/K8sBJQZFhQ", isPromo: true, isVip: false, isSold: false },
-            { id: 2, category: "boutique", title: "Lot de 5 Chaises", desc: "Mobilier pour aménagement de vos bureaux RP.", img: "chaises1.jpg", price: 1000, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 3, category: "boutique", title: "Bureaux", desc: "Ensemble complet pour vos services administratifs.", img: "bureaux1.jpg", price: 2643, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 4, category: "boutique", title: "Matériel DJ", desc: "Équipement sonore pour animer vos événements.", img: "dj1.jpg", price: 3210, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 5, category: "boutique", title: "Conteneur", desc: "Conteneur de stockage industriel et maritime.", img: "conteneur1.jpg", price: 1200, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 6, category: "boutique", title: "Zone de Travaux", desc: "Matériel complet de balisage pour vos chantiers.", img: "travaux1.jpg", price: 2400, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 7, category: "boutique", title: "Barrière de Sécurité", desc: "Barrières robustes pour sécuriser les périmètres.", img: "barriere1.jpg", price: 1100, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            { id: 8, category: "boutique", title: "Bordure Routière", desc: "Éléments de bordure pour aménagement urbain.", img: "bordure1.jpg", price: 2000, promoPrice: null, link: "https://discord.gg/K8sBJQZFhQ", isPromo: false, isVip: false, isSold: false },
-            
-            // Immobilière
-            { id: 101, category: "immobiliere", title: "Villa Beach", desc: "Propriété d'exception en bord de mer. Piscine privée, vue imprenable !", img: "beach1.jpg", price: 150000, promoPrice: 130000, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: true, isSold: false },
-            { id: 102, category: "immobiliere", title: "Résidence Bronx", desc: "Complexe urbain moderne au cœur du centre-ville.", img: "bronx1.jpg", price: 100000, promoPrice: null, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: false, isSold: true },
-            { id: 103, category: "immobiliere", title: "La Citadelle", desc: "Grande propriété fortifiée idéalement située.", img: "citadelle1.jpg", price: 50000, promoPrice: null, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: false, isSold: false },
-            { id: 104, category: "immobiliere", title: "La Grande", desc: "Spacieuse demeure avec de multiples équipements.", img: "lagrande.jpg", price: 75000, promoPrice: null, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: false, isSold: false },
-            { id: 105, category: "immobiliere", title: "Le Manoir", desc: "Bâtisse de charme au cadre confidentiel.", img: "manoir1.jpg", price: 50000, promoPrice: null, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: false, isSold: false },
-            { id: 106, category: "immobiliere", title: "Maison Noire", desc: "Maison au style moderne et sombre d'exception.", img: "maisonnoir1.jpg", price: 20000, promoPrice: null, link: "https://discord.gg/x63Jg6jES7", isPromo: false, isVip: false, isSold: false }
-        ];
+  <script>
+    // Vos identifiants de sécurité
+    const USER_CORRECT = "BrestBrestStaff";
+    const PASS_CORRECT = "StaffRP1234";
 
-        // Charger depuis localStorage ou prendre les défauts
-        let items = JSON.parse(localStorage.getItem('brest_rp_items')) || defaultItems;
+    function seConnecter() {
+      const userSaisi = document.getElementById('username').value;
+      const passSaisi = document.getElementById('password').value;
+      const errorMsg = document.getElementById('error-msg');
 
-        function saveToLocalStorage() {
-            localStorage.setItem('brest_rp_items', JSON.stringify(items));
-            renderAll();
+      if (userSaisi === USER_CORRECT && passSaisi === PASS_CORRECT) {
+        // Cacher la boîte de login et afficher le Panel Admin
+        document.getElementById('login-box').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        errorMsg.style.display = 'none';
+      } else {
+        // Afficher l'erreur
+        errorMsg.style.display = 'block';
+      }
+    }
+
+    // Fonction pour afficher l'image choisie depuis vos fichiers locaux
+    function apercuImage(event) {
+      const input = event.target;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('preview');
+          img.src = e.target.result;
+          img.style.display = 'block';
         }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
 
-        function formatPrice(num) {
-            return num ? num.toLocaleString('fr-FR') + ' €' : '';
-        }
+    function seDeconnecter() {
+      document.getElementById('login-box').style.display = 'block';
+      document.getElementById('admin-panel').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+  </script>
 
-        function switchPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('page-' + pageId).classList.add('active');
-            
-            // Retrouver le bouton nav
-            const activeBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.getAttribute('onclick')?.includes(pageId));
-            if(activeBtn) activeBtn.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function copySessionCode() {
-            const code = document.getElementById('session-code').innerText;
-            navigator.clipboard.writeText(code).then(() => {
-                const subtext = document.getElementById('copy-text');
-                subtext.innerText = "⚡ CODE COPIÉ DANS LE PRESSE-PAPIER !";
-                subtext.style.color = "#00f2fe";
-                setTimeout(() => {
-                    subtext.innerText = "Cliquez pour copier instantanément";
-                    subtext.style.color = "var(--text-muted)";
-                }, 3000);
-            });
-        }
-
-        // RENDU DES ARTICLES PAR SECTION
-        function renderAll() {
-            renderSection('boutique', 'container-boutique');
-            renderSection('immobiliere', 'container-immobiliere');
-            renderAdminList();
-        }
-
-        function renderSection(category, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            const filtered = items.filter(item => item.category === category);
-
-            filtered.forEach(item => {
-                let cardClass = "carte";
-                let badgeHtml = "";
-                let priceHtml = "";
-                let actionBtnHtml = "";
-                let overlayHtml = "";
-
-                if (item.isSold) {
-                    cardClass += " carte-vendu";
-                    badgeHtml = `<div class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>`;
-                    overlayHtml = `
-                        <div class="vendu-cyber-overlay">
-                            <div class="hologram-stamp">
-                                <i class="fa-solid fa-shield-xmark"></i>
-                                <span>NON DISPONIBLE</span>
-                                <small>PROPRIÉTÉ ACQUISE</small>
-                            </div>
-                        </div>`;
-                    priceHtml = `<p class="prix prix-vendu">${formatPrice(item.price)}</p>`;
-                    actionBtnHtml = `<span class="btn-vendu-disabled"><i class="fa-solid fa-circle-xmark"></i> Indisponible</span>`;
-                } else if (item.isPromo) {
-                    cardClass += " carte-promo";
-                    badgeHtml = `<div class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> PROMO FLASH</div>`;
-                    priceHtml = `
-                        <div class="prix-box">
-                            <span class="ancien-prix">${formatPrice(item.price)}</span>
-                            <span class="prix promo-prix">${formatPrice(item.promoPrice || item.price)}</span>
-                        </div>`;
-                    actionBtnHtml = `<a href="${item.link}" target="_blank" class="btn-acheter btn-promo"><i class="fa-solid fa-fire"></i> Profiter !</a>`;
-                } else if (item.isVip) {
-                    cardClass += " carte-vip-gold";
-                    badgeHtml = `<div class="badge-tag gold-tag"><i class="fa-solid fa-crown"></i> OFFRE LUXE VIP</div>`;
-                    priceHtml = `
-                        <div class="prix-box">
-                            ${item.promoPrice ? `<span class="ancien-prix">${formatPrice(item.price)}</span>` : ''}
-                            <span class="prix vip-prix">${formatPrice(item.promoPrice || item.price)}</span>
-                        </div>`;
-                    actionBtnHtml = `<a href="${item.link}" target="_blank" class="btn-acheter btn-vip"><i class="fa-solid fa-gem"></i> Réserver VIP</a>`;
-                } else {
-                    priceHtml = `<p class="prix">${formatPrice(item.price)}</p>`;
-                    actionBtnHtml = `<a href="${item.link}" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Acheter / Réserver</a>`;
-                }
-
-                const card = document.createElement('div');
-                card.className = cardClass;
-                card.innerHTML = `
-                    ${badgeHtml}
-                    <div class="img-wrapper" onclick="openModal(${item.id})">
-                        <img src="${item.img}" alt="${item.title}">
-                        ${overlayHtml}
-                        <button class="btn-preview-overlay"><i class="fa-solid fa-eye"></i> Visualiser</button>
-                    </div>
-                    <div class="contenu">
-                        <h2>${item.title} ${item.isVip ? '<span class="badge-gold">PREMIUM</span>' : ''}</h2>
-                        <p class="description">${item.desc}</p>
-                        <div class="footer-card">
-                            ${priceHtml}
-                            <div class="card-buttons-group">
-                                <button class="btn-view" onclick="openModal(${item.id})" title="Visualiser"><i class="fa-solid fa-eye"></i></button>
-                                ${actionBtnHtml}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        // ADMIN LIST
-        function renderAdminList() {
-            const list = document.getElementById('admin-items-list');
-            list.innerHTML = '';
-
-            items.forEach(item => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'admin-item-row';
-                itemDiv.innerHTML = `
-                    <img src="${item.img}" alt="" class="admin-item-thumb">
-                    <div class="admin-item-info">
-                        <strong>${item.title}</strong>
-                        <small>[${item.category.toUpperCase()}] — ${formatPrice(item.promoPrice || item.price)} ${item.isSold ? '(VENDU)' : ''}</small>
-                    </div>
-                    <div class="admin-item-actions">
-                        <button class="btn-admin btn-edit" onclick="editItem(${item.id})"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button class="btn-admin btn-delete" onclick="deleteItem(${item.id})"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-                list.appendChild(itemDiv);
-            });
-        }
-
-        // MODAL PRÉVISUALISATION
-        function openModal(id) {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('modal-img').src = item.img;
-            document.getElementById('modal-title').innerText = item.title;
-            document.getElementById('modal-desc').innerText = item.desc;
-            
-            const badgeContainer = document.getElementById('modal-badge-container');
-            badgeContainer.innerHTML = '';
-            if (item.isSold) badgeContainer.innerHTML = `<span class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU</span>`;
-            else if (item.isPromo) badgeContainer.innerHTML = `<span class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> PROMO FLASH</span>`;
-            else if (item.isVip) badgeContainer.innerHTML = `<span class="badge-tag gold-tag"><i class="fa-solid fa-crown"></i> VIP</span>`;
-
-            const priceBox = document.getElementById('modal-price-box');
-            if (item.isSold) {
-                priceBox.innerHTML = `<span class="prix prix-vendu">${formatPrice(item.price)} (INDISPONIBLE)</span>`;
-            } else if (item.promoPrice) {
-                priceBox.innerHTML = `<span class="ancien-prix">${formatPrice(item.price)}</span> <span class="prix promo-prix">${formatPrice(item.promoPrice)}</span>`;
-            } else {
-                priceBox.innerHTML = `<span class="prix">${formatPrice(item.price)}</span>`;
-            }
-
-            const buyBtn = document.getElementById('modal-buy-btn');
-            if (item.isSold) {
-                buyBtn.style.display = 'none';
-            } else {
-                buyBtn.style.display = 'inline-flex';
-                buyBtn.href = item.link;
-            }
-
-            document.getElementById('modal-preview').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('modal-preview').classList.remove('active');
-        }
-
-        // SAVE & EDIT & DELETE ADMIN
-        function saveItem(event) {
-            event.preventDefault();
-            const id = document.getElementById('item-id').value;
-            const category = document.getElementById('item-category').value;
-            const title = document.getElementById('item-title').value;
-            const desc = document.getElementById('item-desc').value;
-            const img = document.getElementById('item-img').value;
-            const price = parseFloat(document.getElementById('item-price').value);
-            const promoPrice = parseFloat(document.getElementById('item-promo-price').value) || null;
-            const link = document.getElementById('item-link').value;
-            const isPromo = document.getElementById('item-is-promo').checked;
-            const isVip = document.getElementById('item-is-vip').checked;
-            const isSold = document.getElementById('item-is-sold').checked;
-
-            if (id) {
-                // Modification
-                const index = items.findIndex(i => i.id == id);
-                if (index !== -1) {
-                    items[index] = { id: parseInt(id), category, title, desc, img, price, promoPrice, link, isPromo, isVip, isSold };
-                }
-            } else {
-                // Nouvel ajout
-                const newId = Date.now();
-                items.push({ id: newId, category, title, desc, img, price, promoPrice, link, isPromo, isVip, isSold });
-            }
-
-            saveToLocalStorage();
-            resetForm();
-            alert("L'annonce a été enregistrée avec succès !");
-        }
-
-        function editItem(id) {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
-
-            document.getElementById('admin-form-title').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Modifier l'annonce`;
-            document.getElementById('item-id').value = item.id;
-            document.getElementById('item-category').value = item.category;
-            document.getElementById('item-title').value = item.title;
-            document.getElementById('item-desc').value = item.desc;
-            document.getElementById('item-img').value = item.img;
-            document.getElementById('item-price').value = item.price;
-            document.getElementById('item-promo-price').value = item.promoPrice || '';
-            document.getElementById('item-link').value = item.link;
-            document.getElementById('item-is-promo').checked = item.isPromo;
-            document.getElementById('item-is-vip').checked = item.isVip;
-            document.getElementById('item-is-sold').checked = item.isSold;
-
-            window.scrollTo({ top: document.getElementById('form-item').offsetTop - 100, behavior: 'smooth' });
-        }
-
-        function deleteItem(id) {
-            if (confirm("Voulez-vous vraiment supprimer cette annonce ?")) {
-                items = items.filter(i => i.id !== id);
-                saveToLocalStorage();
-            }
-        }
-
-        function resetForm() {
-            document.getElementById('admin-form-title').innerHTML = `<i class="fa-solid fa-plus-circle"></i> Ajouter une annonce`;
-            document.getElementById('form-item').reset();
-            document.getElementById('item-id').value = '';
-        }
-
-        // Initialisation au chargement
-        window.onload = renderAll;
-    </script>
 </body>
 </html>
