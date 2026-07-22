@@ -5,30 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brest RP - Serveur & Boutique Officielle</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Arrière-plan dynamique et particules -->
+    <!-- FX d'arrière-plan Cyberpunk -->
     <div class="bg-glow"></div>
     <div class="bg-grid-overlay"></div>
+    <div class="scanline"></div>
 
     <!-- En-tête Principal -->
     <header class="header">
         <div class="header-status">
             <span class="status-badge pulse-green">
-                <span class="status-dot"></span> SERVEUR OUVERT
+                <span class="status-dot"></span> SERVEUR EN LIGNE
             </span>
             <span class="badge"><i class="fa-solid fa-shield-halved"></i> Emergency Hamburg</span>
         </div>
         <div class="logo-title">
             <h1>🚔 BREST <span class="text-gradient">ROLEPLAY</span></h1>
         </div>
-        <p class="subtitle">L'expérience Roleplay ultime sur Roblox — Immersion, Exclusivité & Communauté</p>
+        <p class="subtitle">L'expérience RP ultime sur Roblox — Immersion, Exclusivité & Communauté</p>
     </header>
 
-    <!-- Navigation interactive Barre Flottante -->
+    <!-- Navigation Bar Floating Glass -->
     <nav class="glass-nav">
         <button class="nav-btn active" onclick="switchPage('accueil')">
             <i class="fa-solid fa-house"></i> <span>Accueil</span>
@@ -48,7 +49,6 @@
     <section id="page-accueil" class="page-section active">
         <div class="hero-master">
             <div class="hero-banner-card">
-                <div class="hero-overlay"></div>
                 <div class="hero-content">
                     <div class="hero-top">
                         <span class="fr-flag-badge">🇫🇷 SERVEUR FRANÇAIS</span>
@@ -60,8 +60,8 @@
                         </div>
                     </div>
                     
-                    <h2 class="hero-main-title">REJOINS L'AVENTURE <br><span class="hero-glow-text">BREST RP</span></h2>
-                    <p class="hero-desc">Découvre une ville vivante, des métiers exclusifs, une économie réaliste et des bâtiments uniques au monde sur Emergency Hamburg.</p>
+                    <h2 class="hero-main-title">REJOINS L'AVENTURE <br><span class="hero-glow-text">BREST ROLEPLAY</span></h2>
+                    <p class="hero-desc">Découvre une ville ultra-vivante, des métiers exclusifs, une économie dynamique et des biens uniques au monde sur Emergency Hamburg.</p>
                     
                     <div class="hero-actions">
                         <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="btn-hero btn-hero-primary">
@@ -101,7 +101,7 @@
                     <div class="dash-info">
                         <span class="dash-label">RÈGLEMENT VOCAL</span>
                         <span class="dash-val">Micro Requis</span>
-                        <span class="dash-subtext">Pour une immersion RP 100% réaliste</span>
+                        <span class="dash-subtext">Immersion RP 100% garantie</span>
                     </div>
                 </div>
 
@@ -121,20 +121,20 @@
     <section id="page-boutique" class="page-section">
         <div class="section-title">
             <h2>🛒 Catalogue des Builds & Aménagements</h2>
-            <p>Commandez vos builds sur mesure directement depuis notre serveur Discord</p>
+            <p>Commandez vos aménagement sur-mesure directement sur Discord</p>
         </div>
 
         <main class="catalogue">
+            <!-- PROMO FLASH -->
             <div class="carte carte-promo">
-                <div class="promo-badge">-38% PROMO FLASH</div>
+                <div class="badge-tag promo-tag"><i class="fa-solid fa-bolt-lightning"></i> -38% PROMO FLASH</div>
                 <div class="img-wrapper">
                     <img src="gav1.jpg" alt="GAV">
                 </div>
                 <div class="contenu">
                     <h2>Salle de Garde à Vue</h2>
-                    <p class="description">Salle complète aménagée pour le commissariat. Équipement complet prêt à l'emploi !</p>
-                    
-                    <div class="footer-card footer-promo">
+                    <p class="description">Salle complète aménagée pour le commissariat. Équipement prêt à l'emploi !</p>
+                    <div class="footer-card">
                         <div class="prix-box">
                             <span class="ancien-prix">3 542 €</span>
                             <span class="prix promo-prix">2 200 €</span>
@@ -184,43 +184,48 @@
         </div>
 
         <main class="catalogue">
-            <!-- CARTE VILLA BEACH (PROMO GOLD VIP) -->
-            <div class="carte carte-villa-vip">
-                <div class="vip-badge"><i class="fa-solid fa-crown"></i> OFFRE LUXE VIP</div>
+            <!-- VILLA BEACH (GOLD ULTRA VIP) -->
+            <div class="carte carte-vip-gold">
+                <div class="badge-tag gold-tag"><i class="fa-solid fa-crown"></i> OFFRE LUXE VIP</div>
                 <div class="img-wrapper">
                     <img src="beach1.jpg" alt="Beach">
                 </div>
                 <div class="contenu">
                     <h2>Villa Beach <span class="badge-gold">PREMIUM</span></h2>
-                    <p class="description">Propriété de haut standing en bord de mer. Piscine privée, vue imprenable !</p>
-                    
-                    <div class="footer-card footer-vip">
+                    <p class="description">Propriété d'exception en bord de mer. Piscine privée, vue imprenable !</p>
+                    <div class="footer-card">
                         <div class="prix-box">
                             <span class="ancien-prix">150 000 €</span>
                             <span class="prix vip-prix">130 000 €</span>
                         </div>
                         <a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter btn-vip">
-                            <i class="fa-solid fa-gem"></i> Réserver (VIP)
+                            <i class="fa-solid fa-gem"></i> Réserver VIP
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- CARTE RÉSIDENCE BRONX (ULTRA STYLÉ VENDU / ACHETÉ) -->
+            <!-- RÉSIDENCE BRONX (VENDU / ACHETÉ CYBERPUNK 10 000X MIEUX) -->
             <div class="carte carte-vendu">
-                <div class="vendu-badge"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>
+                <div class="badge-tag vendu-tag"><i class="fa-solid fa-lock"></i> VENDU / ACHETÉ</div>
                 <div class="img-wrapper">
                     <img src="bronx1.jpg" alt="Bronx">
-                    <div class="vendu-overlay">
-                        <span class="vendu-stamp">PROPRIÉTÉ ACQUISE</span>
+                    <div class="vendu-cyber-overlay">
+                        <div class="hologram-stamp">
+                            <i class="fa-solid fa-shield-xmark"></i>
+                            <span>NON DISPONIBLE</span>
+                            <small>PROPRIÉTÉ ACQUISE</small>
+                        </div>
                     </div>
                 </div>
                 <div class="contenu">
                     <h2>Résidence Bronx</h2>
-                    <p class="description">Complexe urbain moderne au cœur de la ville.</p>
+                    <p class="description">Complexe urbain moderne au cœur du centre-ville.</p>
                     <div class="footer-card">
                         <p class="prix prix-vendu">100 000 €</p>
-                        <span class="btn-vendu"><i class="fa-solid fa-check-double"></i> Non Disponible</span>
+                        <span class="btn-vendu-disabled">
+                            <i class="fa-solid fa-circle-xmark"></i> Indisponible
+                        </span>
                     </div>
                 </div>
             </div>
@@ -231,20 +236,20 @@
             <div class="carte"><div class="img-wrapper"><img src="maisonnoir1.jpg" alt="Maison Noire"></div><div class="contenu"><h2>Maison Noire</h2><p class="description">Maison au style moderne et sombre d'exception.</p><div class="footer-card"><p class="prix">20 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
             <div class="carte"><div class="img-wrapper"><img src="villamoderne1.jpg" alt="Villa Moderne"></div><div class="contenu"><h2>Villa Moderne</h2><p class="description">Magnifique villa avec design contemporain.</p><div class="footer-card"><p class="prix">40 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
             <div class="carte"><div class="img-wrapper"><img src="grandmanoir1.jpg" alt="Grand Manoir"></div><div class="contenu"><h2>Grand Manoir</h2><p class="description">Somptueux domaine vaste et prestigieux.</p><div class="footer-card"><p class="prix">90 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
-            <div class="carte"><div class="img-wrapper"><img src="maisonfoot1.jpg" alt="Maison Foot"></div><div class="contenu"><h2>Maison du Footballeur</h2><p class="description">Grande maison en face du concessionnaire avec terrain de foot.</p><div class="footer-card"><p class="prix">60 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonfoot1.jpg" alt="Maison Foot"></div><div class="contenu"><h2>Maison du Footballeur</h2><p class="description">Maison en face du concessionnaire avec terrain de foot.</p><div class="footer-card"><p class="prix">60 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
             <div class="carte"><div class="img-wrapper"><img src="maisonbeige1.jpg" alt="Maison Beige"></div><div class="contenu"><h2>Maison Beige</h2><p class="description">Jolie maison aux tons chaleureux et accueillants.</p><div class="footer-card"><p class="prix">35 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
-            <div class="carte"><div class="img-wrapper"><img src="maisonecolo1.jpg" alt="Maison Ecolo"></div><div class="contenu"><h2>Maison Écolo</h2><p class="description">Panneaux solaires intégrés, située en face du stade de foot.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonecolo1.jpg" alt="Maison Ecolo"></div><div class="contenu"><h2>Maison Écolo</h2><p class="description">Panneaux solaires intégrés, située en face du stade.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
             <div class="carte"><div class="img-wrapper"><img src="maisoncabano1.jpg" alt="Maison Cabanon"></div><div class="contenu"><h2>Maison & Cabanon</h2><p class="description">Belle maison disposant d'un cabanon dans le jardin.</p><div class="footer-card"><p class="prix">35 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
             <div class="carte"><div class="img-wrapper"><img src="maisonvoisine1.jpg" alt="Maison Voisine"></div><div class="contenu"><h2>Maison Voisine</h2><p class="description">Maison idéalement située à proximité d'une grande villa.</p><div class="footer-card"><p class="prix">20 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
-            <div class="carte"><div class="img-wrapper"><img src="maisonbleu1.jpg" alt="Maison Bleue"></div><div class="contenu"><h2>Maison Bleue</h2><p class="description">Maison bleu très foncé bénéficiant d'un grand jardin.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
-            <div class="carte"><div class="img-wrapper"><img src="maisonecolocabanon1.jpg" alt="Ecolo Cabanon"></div><div class="contenu"><h2>Maison Écolo & Cabanon</h2><p class="description">Panneaux solaires et cabanon aménagé dans le jardin.</p><div class="footer-card"><p class="prix">30 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
-            <div class="carte"><div class="img-wrapper"><img src="maisonchill1.jpg" alt="Maison Chill"></div><div class="contenu"><h2>Maison Chill</h2><p class="description">Ambiance détente avec parasol et tables de camping au jardin.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonbleu1.jpg" alt="Maison Bleue"></div><div class="contenu"><h2>Maison Bleue</h2><p class="description">Maison bleu foncé bénéficiant d'un grand jardin.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonecolocabanon1.jpg" alt="Ecolo Cabanon"></div><div class="contenu"><h2>Maison Écolo & Cabanon</h2><p class="description">Panneaux solaires et cabanon aménagé au jardin.</p><div class="footer-card"><p class="prix">30 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
+            <div class="carte"><div class="img-wrapper"><img src="maisonchill1.jpg" alt="Maison Chill"></div><div class="contenu"><h2>Maison Chill</h2><p class="description">Ambiance détente avec parasol et tables de camping.</p><div class="footer-card"><p class="prix">25 000 €</p><a href="https://discord.gg/x63Jg6jES7" target="_blank" class="btn-acheter"><i class="fa-brands fa-discord"></i> Réserver</a></div></div></div>
         </main>
     </section>
 
     <!-- Pied de Page -->
     <footer>
-        <p>© 2026 Brest RP — Serveur Officiel Emergency Hamburg. Tous droits réservés.</p>
+        <p>© 2026 Brest RP — Serveur Officiel Emergency Hamburg. Design Ultra-NextGen.</p>
     </footer>
 
     <script>
@@ -264,7 +269,7 @@
             const code = document.getElementById('session-code').innerText;
             navigator.clipboard.writeText(code).then(() => {
                 const subtext = document.getElementById('copy-text');
-                subtext.innerText = "✅ Code copié dans le presse-papier !";
+                subtext.innerText = "⚡ CODE COPIÉ DANS LE PRESSE-PAPIER !";
                 subtext.style.color = "#00f2fe";
                 setTimeout(() => {
                     subtext.innerText = "Cliquez pour copier instantanément";
