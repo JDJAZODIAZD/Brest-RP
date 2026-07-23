@@ -133,7 +133,7 @@ body {
     gap: 12px;
     padding: 10px 18px;
     margin: 2rem auto 3rem;
-    max-width: 880px;
+    max-width: 920px;
     background: rgba(15, 18, 30, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(25px);
@@ -145,15 +145,15 @@ body {
     background: transparent;
     border: none;
     color: var(--text-muted);
-    padding: 12px 24px;
-    font-size: 0.95rem;
+    padding: 12px 20px;
+    font-size: 0.9rem;
     font-weight: 700;
     border-radius: 40px;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     text-decoration: none;
 }
 
@@ -233,7 +233,51 @@ body {
     padding: 0 20px 4rem;
 }
 
-/* CARDS */
+/* ACCUEIL HERO STYLES */
+.hero-master { max-width: 1200px; margin: 0 auto; padding: 0 20px 4rem; }
+.hero-banner-card {
+    position: relative;
+    background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.3), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(0, 242, 254, 0.2), transparent 60%),
+                var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 32px;
+    padding: 3.5rem 3rem;
+    backdrop-filter: blur(25px);
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    margin-bottom: 25px;
+}
+.hero-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px; }
+.fr-flag-badge { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border-card); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; }
+.live-mic { display: flex; align-items: center; gap: 10px; background: rgba(255, 0, 85, 0.12); border: 1px solid rgba(255, 0, 85, 0.4); padding: 6px 16px; border-radius: 20px; color: var(--neon-red); font-size: 0.8rem; font-weight: 800; }
+.sound-wave { display: flex; align-items: center; gap: 3px; height: 12px; }
+.sound-wave span { width: 3px; height: 100%; background-color: var(--neon-red); border-radius: 3px; animation: wave 1s infinite alternate ease-in-out; }
+.sound-wave span:nth-child(2) { animation-delay: 0.2s; }
+.sound-wave span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes wave { 0% { transform: scaleY(0.2); } 100% { transform: scaleY(1); } }
+
+.hero-main-title { font-size: 3rem; font-weight: 900; line-height: 1.15; margin-bottom: 1rem; }
+.hero-glow-text { background: linear-gradient(135deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-desc { color: var(--text-muted); font-size: 1.1rem; max-width: 750px; line-height: 1.6; margin-bottom: 2rem; }
+.hero-actions { display: flex; gap: 15px; flex-wrap: wrap; }
+.btn-hero { padding: 14px 30px; font-size: 0.95rem; font-weight: 800; border-radius: 16px; text-decoration: none; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; border: none; }
+.btn-hero-primary { background: linear-gradient(135deg, var(--primary), #404eed); color: #fff; box-shadow: 0 10px 30px var(--primary-glow); }
+.btn-hero-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid var(--border-card); }
+
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.dash-card { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 22px; padding: 1.5rem; display: flex; align-items: center; gap: 18px; backdrop-filter: blur(15px); transition: all 0.3s; text-decoration: none; color: #fff; cursor: pointer; }
+.dash-card:hover { transform: translateY(-6px); border-color: rgba(0, 242, 254, 0.4); }
+.dash-icon { width: 55px; height: 55px; border-radius: 16px; background: rgba(255, 255, 255, 0.05); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--accent); flex-shrink: 0; }
+.discord-color { color: #5865f2; background: rgba(88, 101, 242, 0.12); }
+.game-color { color: var(--gold); background: rgba(255, 183, 3, 0.12); }
+.dash-info { display: flex; flex-direction: column; }
+.dash-label { font-size: 0.72rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px; }
+.dash-code-box { display: flex; align-items: center; gap: 8px; font-size: 1.3rem; font-weight: 800; color: var(--accent); margin: 2px 0; }
+.dash-val { font-size: 1.1rem; font-weight: 700; margin: 2px 0; }
+.dash-subtext { font-size: 0.8rem; color: var(--text-muted); }
+
+/* CARDS GENERAL */
 .carte {
     background: var(--bg-card);
     border: 1px solid var(--border-card);
@@ -247,376 +291,112 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
-
 .carte:hover {
     transform: translateY(-8px) scale(1.02);
     border-color: rgba(0, 242, 254, 0.4);
     box-shadow: 0 20px 45px rgba(0, 242, 254, 0.2);
 }
-
-.img-wrapper {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    position: relative;
-}
-
-.img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s ease;
-}
-
+.img-wrapper { width: 100%; height: 200px; overflow: hidden; position: relative; }
+.img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
 .carte:hover .img-wrapper img { transform: scale(1.1); }
-
-.contenu {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-}
-
+.contenu { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
 .contenu h2 { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
 .description { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.2rem; line-height: 1.5; }
-
-.footer-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
+.footer-card { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
 .prix { font-size: 1.2rem; font-weight: 800; color: #fff; }
+.badge-tag { position: absolute; top: 14px; left: 14px; font-size: 0.72rem; font-weight: 900; padding: 6px 14px; border-radius: 20px; z-index: 10; letter-spacing: 1px; text-transform: uppercase; }
 
-.badge-tag {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    font-size: 0.72rem;
-    font-weight: 900;
-    padding: 6px 14px;
-    border-radius: 20px;
-    z-index: 10;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+/* SPÉCIFIQUES : PROMO FLASH & VENDU & VIP */
+.carte-promo { border: 2px solid var(--neon-red) !important; box-shadow: 0 0 25px rgba(255, 0, 85, 0.4); }
+.promo-tag { background: linear-gradient(135deg, var(--neon-red), #ff5000); color: #fff; }
+.prix-box { display: flex; flex-direction: column; }
+.ancien-prix { font-size: 0.85rem; color: #ff4d4d; text-decoration: line-through; font-weight: 700; }
+.promo-prix { font-size: 1.4rem !important; font-weight: 900 !important; color: var(--green-live) !important; }
 
-/* ==========================================
-   STYLE NIKE PRODUIT PAGE (MODALE DÉTAIL)
-   ========================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(5, 6, 10, 0.85);
-    backdrop-filter: blur(15px);
-    z-index: 1000;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
+.carte-vip-gold { border: 2px solid var(--gold) !important; background: linear-gradient(180deg, rgba(255, 183, 3, 0.15) 0%, rgba(13, 16, 27, 0.95) 100%) !important; }
+.gold-tag { background: linear-gradient(135deg, #ffb703, #ff7b00); color: #000; }
+.badge-gold { background: linear-gradient(135deg, #ffb703, #ff8c00); color: #000; font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; margin-left: 6px; font-weight: 900; }
+.vip-prix { font-size: 1.45rem !important; font-weight: 900 !important; color: var(--gold) !important; }
 
-.modal-overlay.open {
-    display: flex;
-}
+.carte-vendu { border: 1px solid rgba(255, 0, 85, 0.4) !important; background: linear-gradient(180deg, rgba(255, 0, 85, 0.08) 0%, rgba(8, 10, 18, 0.98) 100%) !important; cursor: default !important; }
+.carte-vendu:hover { transform: none !important; box-shadow: none !important; border-color: rgba(255, 0, 85, 0.4) !important; }
+.vendu-tag { background: linear-gradient(135deg, var(--neon-red), #990033); color: #fff; }
+.vendu-cyber-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(8, 10, 18, 0.75); backdrop-filter: blur(3px); display: flex; justify-content: center; align-items: center; }
+.hologram-stamp { border: 2px solid var(--neon-red); background: rgba(0, 0, 0, 0.85); padding: 10px 20px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; transform: rotate(-8deg); box-shadow: 0 0 20px rgba(255, 0, 85, 0.6); }
+.hologram-stamp i { font-size: 1.5rem; color: var(--neon-red); }
+.hologram-stamp span { font-family: var(--font-tech); font-size: 0.9rem; font-weight: 900; color: #fff; letter-spacing: 2px; }
+.prix-vendu { text-decoration: line-through; color: rgba(255, 255, 255, 0.35) !important; }
 
-.nike-container {
-    background: #0b0f19;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 32px;
-    width: 100%;
-    max-width: 1100px;
-    max-height: 90vh;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    padding: 40px;
-    position: relative;
-    box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-}
-
-.close-modal {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    background: rgba(255,255,255,0.08);
-    border: none;
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s;
-}
+/* MODALE STYLE NIKE */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 6, 10, 0.85); backdrop-filter: blur(15px); z-index: 1000; display: none; justify-content: center; align-items: center; padding: 20px; }
+.modal-overlay.open { display: flex; }
+.nike-container { background: #0b0f19; border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 32px; width: 100%; max-width: 1100px; max-height: 90vh; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 40px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.8); }
+.close-modal { position: absolute; top: 25px; right: 25px; background: rgba(255,255,255,0.08); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
 .close-modal:hover { background: var(--neon-red); }
 
-/* Galerie Nike style */
-.nike-gallery {
-    display: flex;
-    gap: 20px;
-}
-
-.nike-thumbs {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.nike-thumb {
-    width: 70px;
-    height: 70px;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 2px solid transparent;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: all 0.3s;
-}
-
-.nike-thumb.active, .nike-thumb:hover {
-    border-color: var(--accent);
-    opacity: 1;
-}
-
+.nike-gallery { display: flex; gap: 20px; }
+.nike-thumbs { display: flex; flex-direction: column; gap: 12px; }
+.nike-thumb { width: 70px; height: 70px; border-radius: 12px; overflow: hidden; border: 2px solid transparent; cursor: pointer; opacity: 0.6; transition: all 0.3s; }
+.nike-thumb.active, .nike-thumb:hover { border-color: var(--accent); opacity: 1; }
 .nike-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.nike-main-img-box { flex-grow: 1; background: rgba(255,255,255,0.03); border-radius: 20px; overflow: hidden; height: 450px; display: flex; align-items: center; justify-content: center; }
+.nike-main-img-box img { width: 100%; height: 100%; object-fit: cover; }
 
-.nike-main-img-box {
-    flex-grow: 1;
-    background: rgba(255,255,255,0.03);
-    border-radius: 20px;
-    overflow: hidden;
-    height: 450px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.nike-details { display: flex; flex-direction: column; justify-content: flex-start; }
+.nike-price { font-size: 1.8rem; font-weight: 900; color: #fff; margin-bottom: 20px; }
+.selection-title-label { font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; }
+.nike-grid-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+.nike-option-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 12px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer; text-align: center; transition: all 0.2s ease; }
+.nike-option-btn:hover { border-color: var(--accent); background: rgba(0, 242, 254, 0.08); }
+.nike-option-btn.selected { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-.nike-main-img-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+.nike-btn-cart { background: #f8fafc; color: #05060a; border: none; width: 100%; padding: 16px; border-radius: 40px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.3s; margin-bottom: 12px; }
+.nike-btn-cart:hover { background: var(--accent); box-shadow: 0 8px 25px var(--accent-glow); transform: translateY(-2px); }
+.nike-btn-fav { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.2); width: 100%; padding: 16px; border-radius: 40px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.nike-btn-fav:hover, .nike-btn-fav.favorited { background: rgba(255, 0, 85, 0.15); border-color: var(--neon-red); color: var(--neon-red); }
 
-/* Infos produit Nike */
-.nike-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.nike-price {
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.selection-title-label {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Grille de sélection style pointures Nike */
-.nike-grid-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 25px;
-}
-
-.nike-option-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: #fff;
-    padding: 12px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.nike-option-btn:hover {
-    border-color: var(--accent);
-    background: rgba(0, 242, 254, 0.08);
-}
-
-.nike-option-btn.selected {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-    box-shadow: 0 0 15px rgba(255,255,255,0.4);
-}
-
-/* Boutons d'action Nike */
-.nike-btn-cart {
-    background: #f8fafc;
-    color: #05060a;
-    border: none;
-    width: 100%;
-    padding: 16px;
-    border-radius: 40px;
-    font-size: 1rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all 0.3s;
-    margin-bottom: 12px;
-    box-shadow: 0 5px 20px rgba(255,255,255,0.2);
-}
-
-.nike-btn-cart:hover {
-    background: var(--accent);
-    box-shadow: 0 8px 25px var(--accent-glow);
-    transform: translateY(-2px);
-}
-
-.nike-btn-fav {
-    background: transparent;
-    color: #fff;
-    border: 1px solid rgba(255,255,255,0.2);
-    width: 100%;
-    padding: 16px;
-    border-radius: 40px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.nike-btn-fav:hover, .nike-btn-fav.favorited {
-    background: rgba(255, 0, 85, 0.15);
-    border-color: var(--neon-red);
-    color: var(--neon-red);
-}
-
-/* PANIER & FAVORIS MODAL */
-.cart-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(5, 6, 10, 0.85);
-    backdrop-filter: blur(15px);
-    z-index: 1100;
-    display: none;
-    justify-content: flex-end;
-}
-
+/* TIROIR PANIER & NOTIFS CLIENT / DISCORD */
+.cart-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 6, 10, 0.85); backdrop-filter: blur(15px); z-index: 1100; display: none; justify-content: flex-end; }
 .cart-modal-overlay.open { display: flex; }
+.cart-drawer { background: #0d101b; border-left: 1px solid rgba(255,255,255,0.1); width: 100%; max-width: 450px; height: 100%; display: flex; flex-direction: column; padding: 30px; box-shadow: -20px 0 50px rgba(0,0,0,0.8); animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes slideInRight { 0% { transform: translateX(100%); } 100% { transform: translateX(0); } }
 
-.cart-drawer {
-    background: #0d101b;
-    border-left: 1px solid rgba(255,255,255,0.1);
-    width: 100%;
-    max-width: 450px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 30px;
-    box-shadow: -20px 0 50px rgba(0,0,0,0.8);
-    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideInRight {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(0); }
-}
-
-.cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 15px;
-}
-
-.cart-items-list {
-    flex-grow: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.cart-item-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 15px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    position: relative;
-}
-
-.cart-item-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
+.cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+.cart-items-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+.cart-item-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 15px; display: flex; gap: 15px; align-items: center; position: relative; }
+.cart-item-img { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
 .cart-item-info { display: flex; flex-direction: column; flex-grow: 1; }
 .cart-item-title { font-size: 0.95rem; font-weight: 700; color: #fff; }
 .cart-item-sub { font-size: 0.8rem; color: var(--text-muted); }
 .cart-item-price { font-size: 0.9rem; font-weight: 800; color: var(--accent); margin-top: 4px; }
+.cart-item-remove { background: none; border: none; color: var(--neon-red); cursor: pointer; font-size: 1rem; }
 
-.cart-item-remove {
-    background: none;
-    border: none;
-    color: var(--neon-red);
-    cursor: pointer;
-    font-size: 1rem;
+.cart-footer { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin-top: 20px; }
+.cart-total-row { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 900; margin-bottom: 20px; }
+.btn-checkout { background: linear-gradient(135deg, var(--accent), var(--primary)); color: #000; font-weight: 900; width: 100%; padding: 15px; border-radius: 16px; border: none; cursor: pointer; box-shadow: 0 5px 20px var(--accent-glow); transition: transform 0.2s; }
+.btn-checkout:hover { transform: scale(1.02); }
+
+/* CENTRE DE MESSAGERIE & NOTIFICATIONS CLIENT SUR LE SITE */
+.client-notifications-panel {
+    background: rgba(13, 16, 27, 0.95);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-
-.cart-footer {
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 20px;
-    margin-top: 20px;
+.notification-item {
+    background: rgba(0, 242, 254, 0.05);
+    border-left: 4px solid var(--accent);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
-
-.cart-total-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.2rem;
-    font-weight: 900;
-    margin-bottom: 20px;
-}
-
-.btn-checkout {
-    background: linear-gradient(135deg, var(--accent), var(--primary));
-    color: #000;
-    font-weight: 900;
-    width: 100%;
-    padding: 15px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 5px 20px var(--accent-glow);
+.notification-item.admin-reply {
+    background: rgba(0, 240, 118, 0.08);
+    border-left-color: var(--green-live);
 }
 
 @media(max-width: 768px) {
@@ -638,75 +418,138 @@ body {
         <div class="logo-title">
             <h1>BREST <span class="text-gradient">ROLEPLAY</span></h1>
         </div>
-        <p class="subtitle">Boutique immersive de Builds & Agence Immobilière de Luxe.</p>
+        <p class="subtitle">Plongez dans l'expérience RP française ultime sur Roblox. Économie immersive, builds et immobilier.</p>
     </header>
 
     <nav class="glass-nav">
-        <button class="nav-btn active" onclick="switchPage('boutique', this)">
-            <i class="fa-solid fa-boxes-stacked"></i> Boutique Builds
+        <button class="nav-btn active" onclick="switchPage('accueil', this)">
+            <i class="fa-solid fa-house"></i> Accueil
+        </button>
+        <button class="nav-btn" onclick="switchPage('boutique', this)">
+            <i class="fa-solid fa-cart-shopping"></i> Boutique Builds
         </button>
         <button class="nav-btn" onclick="switchPage('immobiliere', this)">
-            <i class="fa-solid fa-building"></i> Agence Immobilière
+            <i class="fa-solid fa-building"></i> Immobilier
         </button>
         <button class="nav-cart-trigger" onclick="toggleCartModal()">
-            <i class="fa-solid fa-cart-shopping"></i> Panier <span class="cart-badge-count" id="cart-count">0</span>
+            <i class="fa-solid fa-basket-shopping"></i> Panier <span class="cart-badge-count" id="cart-count">0</span>
         </button>
         <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="nav-discord">
             <i class="fa-brands fa-discord"></i> Discord
         </a>
     </nav>
 
-    <!-- SECTION BUILDS -->
-    <section id="page-boutique" class="page-section active">
-        <div class="section-title">
-            <h2>Boutique des Builds & Aménagements</h2>
-            <p>Cliquez sur un article pour configurer le nombre exact souhaité (style Nike)</p>
-        </div>
-
-        <div class="catalogue" id="builds-catalogue">
-            <!-- Injecté dynamiquement par JS -->
-        </div>
-    </section>
-
-    <!-- SECTION IMMOBILIER -->
-    <section id="page-immobiliere" class="page-section">
-        <div class="section-title">
-            <h2>Agence Immobilière de Prestige</h2>
-            <p>Cliquez sur un bien pour l'inspecter, l'ajouter aux favoris ou l'enregistrer dans votre panier persistant</p>
-        </div>
-
-        <div class="catalogue" id="immobilier-catalogue">
-            <!-- Injecté dynamiquement par JS -->
-        </div>
-    </section>
-
-    <!-- MODALE STYLE NIKE (CONFIGURATION / DÉTAIL ARTICLE) -->
-    <div class="modal-overlay" id="product-modal">
-        <div class="nike-container">
-            <button class="close-modal" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
-            
-            <!-- Galerie Photos -->
-            <div class="nike-gallery">
-                <div class="nike-thumbs" id="modal-thumbs">
-                    <!-- Miniatures -->
+    <!-- SECTION 1 : ACCUEIL -->
+    <section id="page-accueil" class="page-section active hero-master">
+        <div class="hero-banner-card">
+            <div class="hero-top">
+                <span class="fr-flag-badge">🇫🇷 VERSION FRANÇAISE OFFICIELLE</span>
+                <div class="live-mic">
+                    <span>MICRO ACTIF</span>
+                    <div class="sound-wave">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </div>
-                <div class="nike-main-img-box">
-                    <img id="modal-main-img" src="" alt="Aperçu produit">
+            </div>
+            <div class="hero-content">
+                <h2 class="hero-main-title">REJOIGNEZ LA VILLE DE <span class="hero-glow-text">BREST RP</span></h2>
+                <p class="hero-desc">Découvrez un serveur roleplay rigoureux, doté de scripts uniques, de métiers dynamiques et d'un staff à l'écoute. Préparez votre micro et lancez-vous dès maintenant dans l'aventure !</p>
+                <div class="hero-actions">
+                    <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="btn-hero btn-hero-primary">
+                        <i class="fa-brands fa-discord"></i> Rejoindre la Communauté
+                    </a>
+                    <button class="btn-hero btn-hero-secondary" onclick="copySessionCode()">
+                        <i class="fa-solid fa-copy"></i> Copier Code Session
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="dash-card" onclick="copySessionCode()">
+                <div class="dash-icon"><i class="fa-solid fa-key"></i></div>
+                <div class="dash-info">
+                    <span class="dash-label">CODE SESSION ACTIF</span>
+                    <div class="dash-code-box">
+                        <span id="session-code-text">m727gwhr</span>
+                        <i class="fa-regular fa-copy" style="font-size: 14px;"></i>
+                    </div>
+                    <span class="dash-subtext" id="copy-feedback">Cliquez pour copier</span>
                 </div>
             </div>
 
-            <!-- Détails & Options -->
+            <a href="https://discord.gg/gfYK88ADYt" target="_blank" class="dash-card discord-color">
+                <div class="dash-icon discord-color"><i class="fa-brands fa-discord"></i></div>
+                <div class="dash-info">
+                    <span class="dash-label">DISCORD OFFICIEL</span>
+                    <span class="dash-val">discord.gg/gfYK88ADYt</span>
+                    <span class="dash-subtext">Entraide & Salons vocaux</span>
+                </div>
+            </a>
+
+            <div class="dash-card">
+                <div class="dash-icon game-color"><i class="fa-solid fa-microphone-lines"></i></div>
+                <div class="dash-info">
+                    <span class="dash-label">IMMERSION VOCALE</span>
+                    <span class="dash-val">Micro Obligatoire</span>
+                    <span class="dash-subtext">Jeu de rôle qualitatif</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Centre de messagerie du site pour les réponses des modérateurs -->
+        <div class="client-notifications-panel">
+            <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-bell" style="color: var(--accent);"></i> Centre de Messages & Suivi de Commandes (Site)
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Retrouvez ici les accusés de réception et les réponses en direct de nos modérateurs concernant vos commandes validées.
+            </p>
+            <div id="client-messages-list">
+                <div class="notification-item">
+                    👋 <b>Bienvenue sur Brest RP !</b> Validez un panier pour simuler l'envoi d'une commande vers le serveur Discord des modérateurs et recevoir leur réponse ici en direct.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 : BOUTIQUE BUILDS -->
+    <section id="page-boutique" class="page-section">
+        <div class="section-title">
+            <h2>Boutique des Builds & Aménagements</h2>
+            <p>Cliquez sur un article pour configurer le nombre d'unités souhaitées (style Nike)</p>
+        </div>
+        <div class="catalogue" id="builds-catalogue"></div>
+    </section>
+
+    <!-- SECTION 3 : AGENCE IMMOBILIÈRE (AVEC BIENS VENDUS & PROMOS) -->
+    <section id="page-immobiliere" class="page-section">
+        <div class="section-title">
+            <h2>Agence Immobilière de Prestige</h2>
+            <p>Découvrez nos résidences, villas de luxe et biens déjà attribués</p>
+        </div>
+        <div class="catalogue" id="immobilier-catalogue"></div>
+    </section>
+
+    <!-- MODALE CONFIGURATION STYLE NIKE -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="nike-container">
+            <button class="close-modal" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="nike-gallery">
+                <div class="nike-thumbs" id="modal-thumbs"></div>
+                <div class="nike-main-img-box">
+                    <img id="modal-main-img" src="" alt="Aperçu">
+                </div>
+            </div>
             <div class="nike-details">
                 <div class="nike-price" id="modal-price">0 €</div>
-                <h2 id="modal-title" style="font-size: 1.8rem; font-weight: 900; margin-bottom: 10px;">Nom du produit</h2>
+                <h2 id="modal-title" style="font-size: 1.8rem; font-weight: 900; margin-bottom: 10px;"></h2>
                 <p id="modal-desc" class="description" style="margin-bottom: 25px;"></p>
-
-                <div id="dynamic-selector-container">
-                    <!-- Soit les quantités pour builds, soit info simple immobilier -->
-                </div>
-
-                <button class="nike-btn-cart" id="modal-add-cart-btn" onclick="addCurrentToCart()">
-                    <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
+                <div id="dynamic-selector-container"></div>
+                <button class="nike-btn-cart" onclick="addCurrentToCart()">
+                    <i class="fa-solid fa-basket-shopping"></i> Ajouter au panier
                 </button>
                 <button class="nike-btn-fav" id="modal-fav-btn" onclick="toggleCurrentFavorite()">
                     <i class="fa-regular fa-heart" id="modal-fav-icon"></i> Ajouter aux favoris
@@ -717,152 +560,143 @@ body {
 
     <!-- TIROIR PANIER PERSISTANT -->
     <div class="cart-modal-overlay" id="cart-drawer-overlay" onclick="handleCartBackdrop(event)">
-        <div class="cart-drawer" id="cart-drawer-content">
+        <div class="cart-drawer">
             <div class="cart-header">
-                <h3><i class="fa-solid fa-cart-shopping"></i> Votre Panier RP</h3>
+                <h3><i class="fa-solid fa-basket-shopping"></i> Panier RP</h3>
                 <button class="close-modal" onclick="toggleCartModal()"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="cart-items-list" id="cart-items-container">
-                <!-- Articles du panier -->
-            </div>
+            <div class="cart-items-list" id="cart-items-container"></div>
             <div class="cart-footer">
                 <div class="cart-total-row">
                     <span>Total :</span>
                     <span id="cart-total-price" style="color: var(--accent);">0 €</span>
                 </div>
-                <button class="btn-checkout" onclick="alert('Commande validée ! Rejoignez le Discord pour finaliser la livraison en jeu.')">
-                    Valider la commande
+                <button class="btn-checkout" onclick="checkoutOrder()">
+                    Valider la commande (Notifier Discord & Site)
                 </button>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 Brest RP — Emergency Hamburg. Panier & favoris enregistrés automatiquement.</p>
+        <p>© 2026 Brest RP — Emergency Hamburg. Tous droits réservés.</p>
     </footer>
 
     <script>
-        // Données des produits (Builds et Immobilier)
+        // Catalogue complet avec Accueil, Promos, et Biens Vendus
         const productsData = {
             builds: [
                 {
-                    id: 'b1',
-                    type: 'build',
-                    title: 'Salle de Garde à Vue',
-                    price: 2200,
-                    desc: 'Aménagement complet sécurisé pour le commissariat de police avec cellules renforcées.',
-                    images: ['gav1.jpg', 'gav1.jpg', 'bureaux1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80',
-                    tag: 'PROMO FLASH'
+                    id: 'b1', type: 'build', title: 'Salle de Garde à Vue', price: 2200, oldPrice: 3542, tag: 'PROMO FLASH -38%',
+                    desc: 'Aménagement complet sécurisé pour le commissariat de police.',
+                    images: ['gav1.jpg', 'bureaux1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=600&q=80', isPromo: true
                 },
                 {
-                    id: 'b2',
-                    type: 'build',
-                    title: 'Ensemble de Bureaux Pro',
-                    price: 2643,
-                    desc: 'Mobilier complet pour vos locaux administratifs, entreprises ou sièges de corporation.',
-                    images: ['bureaux1.jpg', 'bureaux1.jpg', 'dj1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80',
-                    tag: 'POPULAIRE'
+                    id: 'b2', type: 'build', title: 'Ensemble de Bureaux Pro', price: 2643, tag: 'BUILD',
+                    desc: 'Mobilier professionnel complet pour vos locaux administratifs ou entreprises.',
+                    images: ['bureaux1.jpg', 'dj1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80'
                 },
                 {
-                    id: 'b3',
-                    type: 'build',
-                    title: 'Matériel DJ & Sonorisation',
-                    price: 3210,
-                    desc: 'Structure de son et platines professionnelles pour vos soirées et événements en ville.',
-                    images: ['dj1.jpg', 'dj1.jpg', 'travaux1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80',
-                    tag: 'EVENT'
+                    id: 'b3', type: 'build', title: 'Matériel DJ & Son', price: 3210, tag: 'BUILD',
+                    desc: 'Structure de sonorisation idéale pour animer vos soirées et événements en ville.',
+                    images: ['dj1.jpg', 'travaux1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=600&q=80'
                 },
                 {
-                    id: 'b4',
-                    type: 'build',
-                    title: 'Kit Zone de Travaux',
-                    price: 2400,
-                    desc: 'Ensemble complet de balisage, panneaux et barrières pour chantiers urbains.',
-                    images: ['travaux1.jpg', 'travaux1.jpg', 'gav1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1541888946425-d0fbb18f8f3c?auto=format&fit=crop&w=600&q=80',
-                    tag: 'TECHNIQUE'
+                    id: 'b4', type: 'build', title: 'Zone de Travaux', price: 2400, tag: 'BUILD',
+                    desc: 'Kit complet de balisage et signalisation pour vos chantiers urbains.',
+                    images: ['travaux1.jpg', 'gav1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1541888946425-d0fbb18f8f3c?auto=format&fit=crop&w=600&q=80'
                 }
             ],
             immobilier: [
                 {
-                    id: 'i1',
-                    type: 'immobilier',
-                    title: 'Villa Beach Prestige',
-                    price: 130000,
+                    id: 'i1', type: 'immobilier', title: 'Villa Beach Prestige', price: 130000, oldPrice: 150000, tag: 'LUXE VIP', isVip: true,
                     desc: 'Propriété d’exception pieds dans l’eau avec piscine privée et vue imprenable.',
-                    images: ['beach1.jpg', 'beach1.jpg', 'citadelle1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=600&q=80',
-                    tag: 'LUXE VIP'
+                    images: ['beach1.jpg', 'citadelle1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=600&q=80'
                 },
                 {
-                    id: 'i2',
-                    type: 'immobilier',
-                    title: 'Résidence Bronx',
-                    price: 100000,
-                    desc: 'Complexe architectural moderne et sécurisé situé au cœur de la ville.',
-                    images: ['bronx1.jpg', 'bronx1.jpg', 'manoir1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',
-                    tag: 'TENDANCE'
+                    id: 'i2', type: 'immobilier', title: 'Résidence Bronx', price: 100000, tag: 'VENDU', isSold: true,
+                    desc: 'Complexe architectural moderne situé au cœur de la ville.',
+                    images: ['bronx1.jpg', 'manoir1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80'
                 },
                 {
-                    id: 'i3',
-                    type: 'immobilier',
-                    title: 'La Citadelle',
-                    price: 50000,
-                    desc: 'Grande propriété fortifiée idéale pour s’établir en toute quiétude.',
-                    images: ['citadelle1.jpg', 'citadelle1.jpg', 'beach1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
-                    tag: 'SÉCURISÉ'
+                    id: 'i3', type: 'immobilier', title: 'La Citadelle', price: 50000, tag: 'IMMOBILIER',
+                    desc: 'Grande propriété fortifiée idéale pour s’établir en toute sécurité.',
+                    images: ['citadelle1.jpg', 'beach1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80'
                 },
                 {
-                    id: 'i4',
-                    type: 'immobilier',
-                    title: 'Le Manoir de Brest',
-                    price: 50000,
-                    desc: 'Demeure de charme dotée d’un vaste domaine forestier confidentiel.',
-                    images: ['manoir1.jpg', 'manoir1.jpg', 'bronx1.jpg'],
-                    fallbackImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
-                    tag: 'HISTORIQUE'
+                    id: 'i4', type: 'immobilier', title: 'Le Manoir', price: 50000, tag: 'IMMOBILIER',
+                    desc: 'Demeure de charme dotée d’un vaste terrain et d’un cadre confidentiel.',
+                    images: ['manoir1.jpg', 'bronx1.jpg'], fallbackImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80'
                 }
             ]
         };
 
-        // État persistant (Panier et Favoris stockés en localStorage)
         let cart = JSON.parse(localStorage.getItem('brest_rp_cart')) || [];
         let favorites = JSON.parse(localStorage.getItem('brest_rp_favs')) || [];
+        let clientMessages = JSON.parse(localStorage.getItem('brest_rp_messages')) || [];
         let currentSelectedProduct = null;
         let currentSelectedQuantity = 1;
 
-        // Initialisation de l'affichage des catalogues
         function renderCatalogues() {
-            const buildsContainer = document.getElementById('builds-catalogue');
-            const immobContainer = document.getElementById('immobilier-catalogue');
-
-            buildsContainer.innerHTML = productsData.builds.map(p => createCardHTML(p)).join('');
-            immobContainer.innerHTML = productsData.immobilier.map(p => createCardHTML(p)).join('');
+            document.getElementById('builds-catalogue').innerHTML = productsData.builds.map(p => createCardHTML(p)).join('');
+            document.getElementById('immobilier-catalogue').innerHTML = productsData.immobilier.map(p => createCardHTML(p)).join('');
             updateCartUI();
+            renderClientMessages();
         }
 
         function createCardHTML(p) {
             const isFav = favorites.includes(p.id);
+            let cardClass = "carte";
+            let tagClass = "badge-tag";
+            let priceHTML = `<span class="prix">${p.price.toLocaleString()} €</span>`;
+
+            if (p.isPromo) {
+                cardClass += " carte-promo";
+                tagClass += " promo-tag";
+                priceHTML = `
+                    <div class="prix-box">
+                        <span class="ancien-prix">${p.oldPrice.toLocaleString()} €</span>
+                        <span class="promo-prix">${p.price.toLocaleString()} €</span>
+                    </div>
+                `;
+            } else if (p.isVip) {
+                cardClass += " carte-vip-gold";
+                tagClass += " gold-tag";
+                priceHTML = `
+                    <div class="prix-box">
+                        <span class="ancien-prix">${p.oldPrice.toLocaleString()} €</span>
+                        <span class="vip-prix">${p.price.toLocaleString()} €</span>
+                    </div>
+                `;
+            } else if (p.isSold) {
+                cardClass += " carte-vendu";
+                tagClass += " vendu-tag";
+                priceHTML = `<span class="prix prix-vendu">${p.price.toLocaleString()} €</span>`;
+            }
+
             return `
-                <div class="carte" onclick="openProductModal('${p.id}')">
-                    <span class="badge-tag" style="background: rgba(0,242,254,0.15); color:var(--accent);">${p.tag}</span>
+                <div class="${cardClass}" ${p.isSold ? '' : `onclick="openProductModal('${p.id}')"`}>
+                    <span class="${tagClass}">${p.tag}</span>
                     <div class="img-wrapper">
                         <img src="${p.images[0]}" alt="${p.title}" onerror="this.src='${p.fallbackImg}'">
+                        ${p.isSold ? `
+                            <div class="vendu-cyber-overlay">
+                                <div class="hologram-stamp">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>VENDU</span>
+                                </div>
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="contenu">
                         <div>
-                            <h2>${p.title}</h2>
+                            <h2>${p.title} ${p.isVip ? '<span class="badge-gold">VIP</span>' : ''}</h2>
                             <p class="description">${p.desc}</p>
                         </div>
                         <div class="footer-card">
-                            <span class="prix">${p.price.toLocaleString()} €</span>
-                            <span style="color: var(--text-muted); font-size: 0.85 font-weight:700;">
-                                <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart" style="color: ${isFav ? 'var(--neon-red)' : 'inherit'};"></i> Configurer
+                            ${priceHTML}
+                            <span style="color: var(--text-muted); font-size: 0.8rem; font-weight:700;">
+                                <i class="fa-${isFav ? 'solid' : 'regular'} fa-heart" style="color: ${isFav ? 'var(--neon-red)' : 'inherit'};"></i> ${p.isSold ? 'Indisponible' : 'Configurer'}
                             </span>
                         </div>
                     </div>
@@ -870,49 +704,41 @@ body {
             `;
         }
 
-        // Navigation entre onglets
         function switchPage(pageId, btnElement) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-            document.getElementById('page-' + (pageId === 'boutique' ? 'boutique' : 'immobiliere')).classList.add('active');
+            const targetSection = pageId === 'accueil' ? 'page-accueil' : (pageId === 'boutique' ? 'page-boutique' : 'page-immobiliere');
+            document.getElementById(targetSection).classList.add('active');
             if(btnElement) btnElement.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Ouverture de la modale style Nike
         function openProductModal(productId) {
-            // Trouver le produit dans builds ou immobilier
             const allProducts = [...productsData.builds, ...productsData.immobilier];
             currentSelectedProduct = allProducts.find(p => p.id === productId);
-            if (!currentSelectedProduct) return;
+            if (!currentSelectedProduct || currentSelectedProduct.isSold) return;
 
             currentSelectedQuantity = 1;
 
-            // Remplir les champs texte et prix
             document.getElementById('modal-title').innerText = currentSelectedProduct.title;
             document.getElementById('modal-desc').innerText = currentSelectedProduct.desc;
             document.getElementById('modal-price').innerText = currentSelectedProduct.price.toLocaleString() + ' €';
 
-            // Galerie photos
             const mainImg = document.getElementById('modal-main-img');
             mainImg.src = currentSelectedProduct.images[0];
             mainImg.onerror = () => { mainImg.src = currentSelectedProduct.fallbackImg; };
 
-            const thumbsContainer = document.getElementById('modal-thumbs');
-            thumbsContainer.innerHTML = currentSelectedProduct.images.map((img, idx) => `
+            document.getElementById('modal-thumbs').innerHTML = currentSelectedProduct.images.map((img, idx) => `
                 <div class="nike-thumb ${idx === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', '${currentSelectedProduct.fallbackImg}', this)">
                     <img src="${img}" onerror="this.src='${currentSelectedProduct.fallbackImg}'">
                 </div>
             `).join('');
 
-            // Gestion du sélecteur dynamique (Quantité pour BUILD, ou simple option pour Immobilier)
             const selectorContainer = document.getElementById('dynamic-selector-container');
             if (currentSelectedProduct.type === 'build') {
                 selectorContainer.innerHTML = `
-                    <div class="selection-title-label">
-                        <span>Sélectionner le nombre d'unités (Builds)</span>
-                    </div>
+                    <div class="selection-title-label">Sélectionner le nombre d'unités voulues</div>
                     <div class="nike-grid-options" id="qty-options">
                         <div class="nike-option-btn selected" onclick="selectQuantity(1, this)">1 Unité</div>
                         <div class="nike-option-btn" onclick="selectQuantity(2, this)">2 Unités</div>
@@ -924,20 +750,14 @@ body {
                 `;
             } else {
                 selectorContainer.innerHTML = `
-                    <div class="selection-title-label">
-                        <span>Statut de propriété immobilière</span>
-                        <span style="color: var(--green-live)">Disponible à l'achat</span>
-                    </div>
+                    <div class="selection-title-label">Statut Immobilier</div>
                     <div style="background: rgba(255,255,255,0.04); padding: 15px; border-radius: 12px; margin-bottom: 25px; font-size: 0.9rem; color: var(--text-muted);">
-                        Acquisition unique sécurisée avec transfert de titre de propriété en jeu.
+                        Acquisition unique sécurisée avec enregistrement notarié en jeu.
                     </div>
                 `;
             }
 
-            // Bouton Favoris état actuel
             updateModalFavoriteButton();
-
-            // Afficher modale
             document.getElementById('product-modal').classList.add('open');
         }
 
@@ -959,15 +779,11 @@ body {
             document.getElementById('product-modal').classList.remove('open');
         }
 
-        // Gestion Favoris Persistants
         function toggleCurrentFavorite() {
             if (!currentSelectedProduct) return;
-            const index = favorites.indexOf(currentSelectedProduct.id);
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(currentSelectedProduct.id);
-            }
+            const idx = favorites.indexOf(currentSelectedProduct.id);
+            if (idx > -1) favorites.splice(idx, 1);
+            else favorites.push(currentSelectedProduct.id);
             localStorage.setItem('brest_rp_favs', JSON.stringify(favorites));
             updateModalFavoriteButton();
             renderCatalogues();
@@ -975,9 +791,7 @@ body {
 
         function updateModalFavoriteButton() {
             const favBtn = document.getElementById('modal-fav-btn');
-            const favIcon = document.getElementById('modal-fav-icon');
             const isFav = favorites.includes(currentSelectedProduct.id);
-
             if (isFav) {
                 favBtn.classList.add('favorited');
                 favBtn.innerHTML = `<i class="fa-solid fa-heart" style="color: var(--neon-red);"></i> Retiré des favoris`;
@@ -987,18 +801,11 @@ body {
             }
         }
 
-        // Gestion Panier Persistant
         function addCurrentToCart() {
             if (!currentSelectedProduct) return;
-
-            const existingItemIndex = cart.findIndex(item => item.id === currentSelectedProduct.id);
-            
-            if (existingItemIndex > -1) {
-                if (currentSelectedProduct.type === 'build') {
-                    cart[existingItemIndex].quantity += currentSelectedQuantity;
-                } else {
-                    cart[existingItemIndex].quantity = 1; // Immobilier unique
-                }
+            const existing = cart.find(item => item.id === currentSelectedProduct.id);
+            if (existing) {
+                if (currentSelectedProduct.type === 'build') existing.quantity += currentSelectedQuantity;
             } else {
                 cart.push({
                     id: currentSelectedProduct.id,
@@ -1010,11 +817,10 @@ body {
                     quantity: currentSelectedProduct.type === 'build' ? currentSelectedQuantity : 1
                 });
             }
-
             localStorage.setItem('brest_rp_cart', JSON.stringify(cart));
             updateCartUI();
             closeProductModal();
-            toggleCartModal(); // Ouvrir le panier pour montrer l'enregistrement
+            toggleCartModal();
         }
 
         function removeFromCart(id) {
@@ -1025,8 +831,7 @@ body {
 
         function updateCartUI() {
             const countBadge = document.getElementById('cart-count');
-            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            countBadge.innerText = totalCount;
+            countBadge.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
 
             const listContainer = document.getElementById('cart-items-container');
             const totalPriceEl = document.getElementById('cart-total-price');
@@ -1053,22 +858,76 @@ body {
                     </div>
                 `;
             }).join('');
-
             totalPriceEl.innerText = totalPrice.toLocaleString() + ' €';
         }
 
         function toggleCartModal() {
-            const drawer = document.getElementById('cart-drawer-overlay');
-            drawer.classList.toggle('open');
+            document.getElementById('cart-drawer-overlay').classList.toggle('open');
         }
 
         function handleCartBackdrop(e) {
-            if (e.target.id === 'cart-drawer-overlay') {
-                toggleCartModal();
-            }
+            if (e.target.id === 'cart-drawer-overlay') toggleCartModal();
         }
 
-        // Lancement au chargement
+        // SIMULATION VALIDATION DE COMMANDE -> DISCORD & MESSAGE SUR LE SITE
+        function checkoutOrder() {
+            if (cart.length === 0) {
+                alert('Votre panier est vide.');
+                return;
+            }
+
+            const orderId = 'CMD-' + Math.floor(100000 + Math.random() * 900000);
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            // 1. Simulation envoi vers un canal Discord modérateurs
+            console.log(`[DISCORD WEBHOOK SIMULATION] 🚨 Nouvelle commande validée ! ID: ${orderId} | Montant: ${totalAmount.toLocaleString()} €`);
+
+            // 2. Création du message de suivi côté client sur le site
+            const newMsg = {
+                id: orderId,
+                text: `📦 <b>Commande #${orderId} validée</b> (${totalAmount.toLocaleString()} €). Envoyée au salon des modérateurs sur Discord. En attente de prise en charge...`,
+                time: new Date().toLocaleTimeString(),
+                isAdminReply: false
+            };
+            clientMessages.unshift(newMsg);
+            localStorage.setItem('brest_rp_messages', JSON.stringify(clientMessages));
+
+            // Vider le panier
+            cart = [];
+            localStorage.setItem('brest_rp_cart', JSON.stringify(cart));
+            updateCartUI();
+            toggleCartModal();
+            switchPage('accueil');
+            renderClientMessages();
+
+            // Simulation d'une réponse d'un modérateur après 4 secondes pour l'effet interactif
+            setTimeout(() => {
+                const replyMsg = {
+                    id: orderId + '-REPLY',
+                    text: `✅ <b>[Staff / Modérateur Discord]</b> Commande #${orderId} acceptée ! Rejoignez le vocal support pour la livraison de vos biens en jeu sur Emergency Hamburg.`,
+                    time: new Date().toLocaleTimeString(),
+                    isAdminReply: true
+                };
+                clientMessages.unshift(replyMsg);
+                localStorage.setItem('brest_rp_messages', JSON.stringify(clientMessages));
+                renderClientMessages();
+            }, 4000);
+        }
+
+        function renderClientMessages() {
+            const container = document.getElementById('client-messages-list');
+            if (clientMessages.length === 0) {
+                container.innerHTML = `<div class="notification-item">Aucun message pour le moment.</div>`;
+                return;
+            }
+            container.innerHTML = clientMessages.map(m => `
+                <div class="notification-item ${m.isAdminReply ? 'admin-reply' : ''}">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); float: right;">${m.time}</div>
+                    ${m.text}
+                </div>
+            `).join('');
+        }
+
         window.onload = () => {
             renderCatalogues();
         };
